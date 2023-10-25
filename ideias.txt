@@ -1,0 +1,16 @@
+------ jogos -------
+
+poker
+blackjack
+sinuca (?)
+roleta (?)
+jogo dos dados
+slot machine (?)
+corrida de cavalo
+
+------ mecanismos -----
+
+agiota
+interação com o dealer
+
+
