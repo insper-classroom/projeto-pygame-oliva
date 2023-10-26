@@ -83,13 +83,13 @@ class Blackjack():
 
     def finishGame(self):
         self.dealerPoints = sum(map(self.getCardValue, self.dealerCards))
+        self.userPoints = sum(map(self.getCardValue, self.userCards))
         while self.dealerPoints < 17:
             self.addCard(False)
             self.dealerPoints = sum(map(self.getCardValue, self.dealerCards))
         if self.dealerPoints > 21 and self.userPoints <= 21:
             self.resultMessage = 'Você ganhou!'
         elif (self.userPoints <= 21) and (21 - self.userPoints) < (21 - self.dealerPoints):
-            self.draw_text("Você ganhou!", 530, 665, self.font, (255, 255, 255))
             self.resultMessage = 'Você ganhou!'
         elif self.userPoints == self.dealerPoints and self.userPoints <= 21:
             self.resultMessage = 'Empate!'
