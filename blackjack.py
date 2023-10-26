@@ -1,9 +1,12 @@
+# Importa as bibliotecas necessárias para o jogo
 import pygame
 import os
 import random
 
+# Define a classe Blackjack
 class Blackjack():
     def __init__(self, window):
+        # Inicializa a classe com a janela do jogo e variáveis de estado
         self.window = window
         self.userCards = []
         self.dealerCards = []
@@ -18,54 +21,64 @@ class Blackjack():
         self.reset = False
         self.resetButton = pygame.rect.Rect(510, 650, 100, 50)
         self.finishButton = pygame.rect.Rect(660, 650, 100, 50)
-        
+
     def start(self):
+        # Inicia o jogo criando o baralho e distribuindo cartas para o jogador e o dealer
         self.deck = self.createDeck()
         self.userCards = [random.choice(self.deck), random.choice(self.deck)]
         self.dealerCards = [random.choice(self.deck), random.choice(self.deck)]
 
     def createDeck(self):
+        # Cria o baralho com cartas de imagem
         deck = []
         for folderName in os.listdir('./images/cards'):
             if folderName == 'Backs':
                 continue
-            for i in range(1,14):
+            for i in range(1, 14):
                 deck.append(f'{folderName}/{i}.png')
         return deck
-    
+
     def desenha(self, status=False):
+        # Desenha a tela do jogo
         self.window.fill((0, 0, 0))
         for card in self.userCards:
-            self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.userCards.index(card)*150), 420))
+            # Desenha as cartas do jogador
+            self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.userCards.index(card) * 150), 420))
         for index, card in enumerate(self.dealerCards):
             if not status:
                 if index == 0:
-                    self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.dealerCards.index(card)*150), 100))
+                    # Exibe a primeira carta do dealer e uma carta de costas
+                    self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.dealerCards.index(card) * 150), 100))
                 else:
-                    self.window.blit(pygame.transform.scale(pygame.image.load('images/cards/Backs/back.png'), (125, 181)), (500 + (self.dealerCards.index(card)*150), 100))
+                    self.window.blit(pygame.transform.scale(pygame.image.load('images/cards/Backs/back.png'), (125, 181)), (500 + (self.dealerCards.index(card) * 150), 100))
             else:
-                self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.dealerCards.index(card)*150), 100))
+                # Exibe todas as cartas do dealer se o jogo estiver no final
+                self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.dealerCards.index(card) * 150), 100))
         if self.isInMenu:
+            # Desenha os botões se o jogo estiver no menu
             self.drawButtons()
-
         if self.reset:
+            # Exibe uma mensagem e os botões de reiniciar e fechar se o jogo tiver terminado
             self.drawText(self.resultMessage, 570, 350, self.font, (255, 255, 255))
-            pygame.draw.rect(self.window, (0, 128, 0), self.resetButton) 
+            pygame.draw.rect(self.window, (0, 128, 0), self.resetButton)
             pygame.draw.rect(self.window, (255, 0, 0), self.finishButton)
             self.drawText("Reiniciar", 515, 665, self.font, (255, 255, 255))
             self.drawText("Fechar", 675, 665, self.font, (255, 255, 255))
-            
+
     def drawText(self, text, x, y, font, color):
+        # Desenha um texto na tela
         text_surface = font.render(text, True, color)
         self.window.blit(text_surface, (x, y))
 
     def drawButtons(self):
+        # Desenha os botões "Pedir" e "Parar"
         pygame.draw.rect(self.window, (0, 128, 0), self.pedir)  # Botão Pedir
         pygame.draw.rect(self.window, (255, 0, 0), self.parar)  # Botão Parar
         self.drawText("Pedir", 530, 665, self.font, (255, 255, 255))
         self.drawText("Parar", 680, 665, self.font, (255, 255, 255))
 
     def getCardValue(self, card):
+        # Obtém o valor numérico da carta
         value = card.split('/')[1].split('.')[0]
         if value.isnumeric():
             if int(value) > 10:
@@ -73,6 +86,7 @@ class Blackjack():
             return int(value)
 
     def addCard(self, user=True):
+        # Adiciona uma carta ao jogador ou dealer
         if user:
             self.userCards.append(random.choice(self.deck))
             self.userPoints = sum(map(self.getCardValue, self.userCards))
@@ -82,6 +96,7 @@ class Blackjack():
             self.dealerCards.append(random.choice(self.deck))
 
     def finishGame(self):
+        # Finaliza o jogo, calcula a pontuação e determina o resultado
         self.dealerPoints = sum(map(self.getCardValue, self.dealerCards))
         self.userPoints = sum(map(self.getCardValue, self.userCards))
         while self.dealerPoints < 17:
@@ -98,6 +113,7 @@ class Blackjack():
         self.reset = True
 
     def resetGame(self):
+        # Reinicia o jogo
         self.userCards = []
         self.dealerCards = []
         self.deck = []
