@@ -46,24 +46,24 @@ class Blackjack():
             else:
                 self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.dealerCards.index(card)*150), 100))
         if self.isInMenu:
-            self.draw_buttons()
+            self.drawButtons()
 
         if self.reset:
-            self.draw_text(self.resultMessage, 570, 350, self.font, (255, 255, 255))
+            self.drawText(self.resultMessage, 570, 350, self.font, (255, 255, 255))
             pygame.draw.rect(self.window, (0, 128, 0), self.resetButton) 
             pygame.draw.rect(self.window, (255, 0, 0), self.finishButton)
-            self.draw_text("Reiniciar", 515, 665, self.font, (255, 255, 255))
-            self.draw_text("Fechar", 675, 665, self.font, (255, 255, 255))
+            self.drawText("Reiniciar", 515, 665, self.font, (255, 255, 255))
+            self.drawText("Fechar", 675, 665, self.font, (255, 255, 255))
             
-    def draw_text(self, text, x, y, font, color):
+    def drawText(self, text, x, y, font, color):
         text_surface = font.render(text, True, color)
         self.window.blit(text_surface, (x, y))
 
-    def draw_buttons(self):
+    def drawButtons(self):
         pygame.draw.rect(self.window, (0, 128, 0), self.pedir)  # Botão Pedir
         pygame.draw.rect(self.window, (255, 0, 0), self.parar)  # Botão Parar
-        self.draw_text("Pedir", 530, 665, self.font, (255, 255, 255))
-        self.draw_text("Parar", 680, 665, self.font, (255, 255, 255))
+        self.drawText("Pedir", 530, 665, self.font, (255, 255, 255))
+        self.drawText("Parar", 680, 665, self.font, (255, 255, 255))
 
     def getCardValue(self, card):
         value = card.split('/')[1].split('.')[0]
