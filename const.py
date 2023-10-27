@@ -1,1 +1,1 @@
-img_sizes = {'blackjack' : (100,84), 'slot_machine' : (80,80), 'roulette' : (100,100), 'horse_race' : (250,85), 'poker' : (290,150)}
+img_sizes = {'blackjack' : (100,84), 'slot_machine' : (80,80), 'roulette' : (100,100), 'horse_race' : (255,90), 'poker' : (290,150)}
