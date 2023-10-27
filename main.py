@@ -1,5 +1,7 @@
 import pygame
 import os
+from tela_main import *
+from player import Player
 
 def inicializa():
     """
@@ -11,22 +13,28 @@ def inicializa():
 
 
     asset = {
-        'def_font' : pygame.font.match_font('old english five'),
+        'objs' : {},
+        'personagens' : {},
     }
 
-    for img in os.listdir('./Cassino'):
-        if img.endswith('.png'):
-            asset[img[:-4]] = pygame.transform.scale(pygame.image.load(f'Cassino/{img}'), (60,60))
-        elif img.endswith('.jpg'):
-            asset[img[:-4]] = pygame.image.load(f'Cassino/{img}')
+    for img in os.listdir('images/objs'):
+        asset['objs'][img[:-4]] = pygame.image.load(f'images/objs/{img}')
     
-    asset['mapa'] = pygame.transform.scale(pygame.transform.rotate(asset['mapa'], 90), (1280,720))
+    asset['mapa'] = Cassino(asset)
+
+    for img in os.listdir('images/personagens'):
+        if img.startswith('jogador'):
+            asset[img[:-4]] = Player(pygame.image.load(f'images/personagens/{img}'), [5, 300], (60,60))
+        else:
+            asset['personagens'][img[:-4]] = pygame.transform.scale(pygame.image.load(f'images/personagens/{img}'), (60,60))
 
     state = {
-        'jogador' : [5,300],
+        'tela_jogo' : 'main',
+        'aviso' : None,
+        'jogador' : asset['jogador'].pos,
         'vel' : [0,0],
         'last_updated' : 0,
-        'dinheiro' : 2000,
+        'dinheiro' : 2000, 
     }
 
     return window, asset, state
@@ -40,34 +48,47 @@ def atualiza_estado(asset, state):
     dt = (t_atual - state['last_updated'])/1000
     state['last_updated'] = t_atual
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            return False
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
-            state['vel'][0] += 120
-        elif event.type == pygame.KEYUP and event.key == pygame.K_d:
-            state['vel'][0] += -120
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-            state['vel'][0] += -120
-        elif event.type == pygame.KEYUP and event.key == pygame.K_a:
-            state['vel'][0] += 120
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-            state['vel'][1] += -120
-        elif event.type == pygame.KEYUP and event.key == pygame.K_w:
-            state['vel'][1] += 120
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-            state['vel'][1] += 120
-        elif event.type == pygame.KEYUP and event.key == pygame.K_s:
-            state['vel'][1] += -120
-    
-    state['jogador'][0] = state['jogador'][0] + state['vel'][0] * dt
-    state['jogador'][1] = state['jogador'][1] + state['vel'][1] * dt
+    if state['tela_jogo'] == 'main':
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
+                state['vel'][0] += 150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_d:
+                state['vel'][0] += -150
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
+                state['vel'][0] += -150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_a:
+                state['vel'][0] += 150
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+                state['vel'][1] += -150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_w:
+                state['vel'][1] += 150
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                state['vel'][1] += 150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_s:
+                state['vel'][1] += -150
+        
+        asset['jogador'].pos[0] = asset['jogador'].pos[0] + state['vel'][0] * dt
+        asset['jogador'].pos[1] = asset['jogador'].pos[1] + state['vel'][1] * dt
 
-    if state['jogador'][0] < 0 or state['jogador'][0] + asset['jogador'].get_size()[0] >= 1280:
-        state['jogador'][0] = state['jogador'][0] - state['vel'][0] * dt
+        #Check if player is outside bounds in x-axis
+        if asset['jogador'].pos[0] < 0 or asset['jogador'].pos[0] + asset['jogador'].size[0] >= 1280:
+            asset['jogador'].pos[0] = asset['jogador'].pos[0] - state['vel'][0] * dt
+        
+        #Check if player is outside bounds in y-axis
+        if asset['jogador'].pos[1] < 0 or asset['jogador'].pos[1] + asset['jogador'].size[1] >= 720:
+            asset['jogador'].pos[1] = asset['jogador'].pos[1] - state['vel'][1] * dt
 
-    if state['jogador'][1] < 0 or state['jogador'][1] + asset['jogador'].get_size()[0] >= 720:
-        state['jogador'][1] = state['jogador'][1] - state['vel'][1] * dt
+        for key, objs in asset['mapa'].rects().items():
+            for obj in objs:
+                if obj.colliderect(asset['jogador'].transform()):
+                    state['aviso'] = key
+                    return True
+                else:
+                    state['aviso'] = None
+    else:
+        print('entrou')
 
     return True
 
@@ -76,18 +97,13 @@ def desenha(window, asset, state):
     Desenha todos os objetos e strings na tela.
     """
     window.fill((0,0,0))
-    window.blit(asset['mapa'], (0,0))
+    if state['tela_jogo'] == 'main':
+        asset['mapa'].desenha(window)
 
-    for i in range(3):
-        window.blit(pygame.transform.scale(asset['blackjack_table'], (100,84)), (50 + 160*i, 570))
-        window.blit(pygame.transform.scale(asset['slot_machine'], (80,80)), (1010, 140 + 80*i))
-        window.blit(pygame.transform.scale(asset['slot_machine'], (80,80)), (1160, 140 + 80*i))
-        window.blit(pygame.transform.scale(asset['roulette'], (100,100)), (815 + 160*i, 475 + 65*i))
+    window.blit(asset['jogador'].img, (state['jogador']))
 
-    window.blit(pygame.transform.scale(asset['placa'], (250,85)), (970, 0))
-    window.blit(pygame.transform.scale(asset['poker_table'], (290,150)), (370, 210))
-
-    window.blit(asset['jogador'], (state['jogador']))
+    if state['aviso'] != None:
+        pygame.draw.rect(window, (255,255,255), pygame.Rect(10, 10, 100, 60))
 
     pygame.display.update()
     return
