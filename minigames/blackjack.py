@@ -138,6 +138,23 @@ class Blackjack():
         self.reset = False
         self.start()
 
+    def interacoes(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if self.isInMenu:
+                    if self.pedir.collidepoint(event.pos):
+                        self.addCard()
+                    elif self.parar.collidepoint(event.pos):
+                        self.isInMenu = False
+                elif self.reset:
+                    if self.resetButton.collidepoint(event.pos):
+                        self.resetGame()
+                    elif self.finishButton.collidepoint(event.pos):
+                        return False
+        return True
+
 if __name__ == '__main__':
     pygame.init()
     window = pygame.display.set_mode((1280,720))
@@ -146,20 +163,9 @@ if __name__ == '__main__':
     blackjack.start()
     running = True
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if blackjack.isInMenu:
-                    if blackjack.pedir.collidepoint(event.pos):
-                        blackjack.addCard()
-                    elif blackjack.parar.collidepoint(event.pos):
-                        blackjack.isInMenu = False
-                elif blackjack.reset:
-                    if blackjack.resetButton.collidepoint(event.pos):
-                        blackjack.resetGame()
-                    elif blackjack.finishButton.collidepoint(event.pos):
-                        running = False
+        if not blackjack.interacoes():
+            running = False
+            break
         blackjack.desenha()
         if not blackjack.isInMenu:
             blackjack.finishGame()
