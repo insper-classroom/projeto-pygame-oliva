@@ -53,25 +53,28 @@ class Blackjack():
 
     def desenha(self, status=False):
         """Desenha a tela do jogo"""
-        self.window.fill((0, 0, 0))
-        for card in self.userCards:
-            # Desenha as cartas do jogador
-            self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.userCards.index(card) * 150), 420))
+        self.window.fill((2, 85, 0))
+        userCardsWidth = len(self.userCards) * 150
+        dealerCardsWidth = len(self.dealerCards) * 150
+        startXUser = (1280 - userCardsWidth) // 2
+        startXDealer = (1280 - dealerCardsWidth) // 2
+        
+        for index, card in enumerate(self.userCards):
+            self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXUser + (index * 150), 420))
+        
         for index, card in enumerate(self.dealerCards):
             if not status:
                 if index == 0:
-                    # Exibe a primeira carta do dealer e uma carta de costas
-                    self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.dealerCards.index(card) * 150), 100))
+                    self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
                 else:
-                    self.window.blit(pygame.transform.scale(pygame.image.load('images/cards/Backs/back.png'), (125, 181)), (500 + (self.dealerCards.index(card) * 150), 100))
+                    self.window.blit(pygame.transform.scale(pygame.image.load('images/cards/Backs/back.png'), (125, 181)), (startXDealer + (index * 150), 100))
             else:
-                # Exibe todas as cartas do dealer se o jogo estiver no final
-                self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (500 + (self.dealerCards.index(card) * 150), 100))
+                self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
+        
         if self.isInMenu:
-            # Desenha os botões se o jogo estiver no menu
             self.drawButtons()
+        
         if self.reset:
-            # Exibe uma mensagem e os botões de reiniciar e fechar se o jogo tiver terminado
             self.drawText(self.resultMessage, 570, 350, self.font, (255, 255, 255))
             pygame.draw.rect(self.window, (0, 128, 0), self.resetButton)
             pygame.draw.rect(self.window, (255, 0, 0), self.finishButton)
@@ -166,6 +169,5 @@ if __name__ == '__main__':
         if not blackjack.isInMenu:
             blackjack.finishGame()
             blackjack.desenha(True)
-        print(blackjack.userCards)
         pygame.display.update()
     pygame.quit()
