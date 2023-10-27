@@ -62,7 +62,7 @@ class Blackjack():
                 if index == 0:
                     self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
                 else:
-                    self.window.blit(pygame.transform.scale(pygame.image.load('images/cards/Backs/back.png'), (125, 181)), (startXDealer + (index * 150), 100))
+                    self.window.blit(pygame.transform.scale(pygame.image.load('./images/cards/Backs/back.png'), (125, 181)), (startXDealer + (index * 150), 100))
             else:
                 self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
         
