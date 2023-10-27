@@ -25,21 +25,16 @@ class Blackjack():
     def start(self):
         """Inicia o jogo criando o baralho e distribuindo cartas para o jogador e o dealer"""
         self.deck = self.createDeck()
-        self.userCards = [random.choice(self.deck), random.choice(self.deck)]
         self.userCards = []
-        card1 = random.randint(0, len(self.deck) - 1)
-        self.userCards.append(self.deck[card1])
-        self.deck.pop(card1)
-        card2 = random.randint(0, len(self.deck) - 1)
-        self.userCards.append(self.deck[card2])
-        self.deck.pop(card2)
         self.dealerCards = []
-        card1 = random.randint(0, len(self.deck) - 1)
-        self.dealerCards.append(self.deck[card1])
-        self.deck.pop(card1)
-        card2 = random.randint(0, len(self.deck) - 1)
-        self.dealerCards.append(self.deck[card2])
-        self.deck.pop(card2)
+        for _ in range(2):
+            card = random.randint(0, len(self.deck) - 1)
+            self.userCards.append(self.deck[card])
+            self.deck.pop(card)
+        for _ in range(2):
+            card = random.randint(0, len(self.deck) - 1)
+            self.dealerCards.append(self.deck[card])
+            self.deck.pop(card)
 
     def createDeck(self):
         """Cria o baralho com cartas de imagem"""
