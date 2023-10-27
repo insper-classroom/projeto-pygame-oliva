@@ -13,6 +13,10 @@ def inicializa():
     pygame.display.set_caption('Cassino')
 
     asset = {
+        'def_font' : pygame.font.Font(pygame.font.get_default_font(), 16),
+        'leg_font' : pygame.font.Font(pygame.font.get_default_font(), 12),
+        'money_font' : pygame.font.Font(pygame.font.match_font('Abel'), 30),
+        'old_font' : pygame.font.Font(pygame.font.match_font('Abel'), 30),
         'objs' : {},
         'personagens' : {},
     }
@@ -80,7 +84,10 @@ def game_loop(window, asset, state):
             if not blackjack.isInMenu:
                 blackjack.finishGame()
                 blackjack.desenha(True)
-        
+        if state['dinheiro'] >= 0:
+            window.blit(asset['money_font'].render(f'Saldo: ${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
+        else:
+            window.blit(asset['money_font'].render(f'Saldo: ${state["dinheiro"]}', True, (255, 0, 0)), (10,10))
         pygame.display.update()
 
 if __name__ == '__main__':
