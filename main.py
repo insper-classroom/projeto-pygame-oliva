@@ -1,6 +1,7 @@
 import pygame
 import os
 from tela_main import *
+from minigames.blackjack import *
 from player import Player
 
 def inicializa():
@@ -10,7 +11,6 @@ def inicializa():
     pygame.init()
     window = pygame.display.set_mode((1280, 720))
     pygame.display.set_caption('Cassino')
-
 
     asset = {
         'objs' : {},
@@ -34,7 +34,9 @@ def inicializa():
         'jogador' : asset['jogador'].pos,
         'vel' : [0,0],
         'last_updated' : 0,
-        'dinheiro' : 2000, 
+        'dinheiro' : 2000,
+        'dt' : 0,
+        'minigame' : None,
     }
 
     return window, asset, state
@@ -43,82 +45,43 @@ def atualiza_estado(asset, state):
     """
     Atualiza estado do jogo, e checa ações e interações.
     """
-
     t_atual = pygame.time.get_ticks()
-    dt = (t_atual - state['last_updated'])/1000
+    state['dt'] = (t_atual - state['last_updated'])/1000
     state['last_updated'] = t_atual
 
     if state['tela_jogo'] == 'main':
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return False
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
-                state['vel'][0] += 150
-            elif event.type == pygame.KEYUP and event.key == pygame.K_d:
-                state['vel'][0] += -150
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                state['vel'][0] += -150
-            elif event.type == pygame.KEYUP and event.key == pygame.K_a:
-                state['vel'][0] += 150
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                state['vel'][1] += -150
-            elif event.type == pygame.KEYUP and event.key == pygame.K_w:
-                state['vel'][1] += 150
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                state['vel'][1] += 150
-            elif event.type == pygame.KEYUP and event.key == pygame.K_s:
-                state['vel'][1] += -150
+        return asset['mapa'].interacoes(asset, state)
+    elif state['tela_jogo'] == 'blackjack':
+        if not state['minigame'].interacoes():
+            state['tela_jogo'] = 'main'
         
-        asset['jogador'].pos[0] = asset['jogador'].pos[0] + state['vel'][0] * dt
-        asset['jogador'].pos[1] = asset['jogador'].pos[1] + state['vel'][1] * dt
-
-        #Check if player is outside bounds in x-axis
-        if asset['jogador'].pos[0] < 0 or asset['jogador'].pos[0] + asset['jogador'].size[0] >= 1280:
-            asset['jogador'].pos[0] = asset['jogador'].pos[0] - state['vel'][0] * dt
-        
-        #Check if player is outside bounds in y-axis
-        if asset['jogador'].pos[1] < 0 or asset['jogador'].pos[1] + asset['jogador'].size[1] >= 720:
-            asset['jogador'].pos[1] = asset['jogador'].pos[1] - state['vel'][1] * dt
-
-        for key, objs in asset['mapa'].rects().items():
-            for obj in objs:
-                if obj.colliderect(asset['jogador'].transform()):
-                    state['aviso'] = key
-                    return True
-                else:
-                    state['aviso'] = None
-    else:
-        print('entrou')
-
-    return True
-
-def desenha(window, asset, state):
-    """
-    Desenha todos os objetos e strings na tela.
-    """
-    window.fill((0,0,0))
-    if state['tela_jogo'] == 'main':
-        asset['mapa'].desenha(window)
-
-    window.blit(asset['jogador'].img, (state['jogador']))
-
-    if state['aviso'] != None:
-        pygame.draw.rect(window, (255,255,255), pygame.Rect(10, 10, 100, 60))
-
-    pygame.display.update()
-    return
+        return True
 
 def game_loop(window, asset, state):
     """
     Loop principal do jogo, onde roda todas as outras funções necessárias.
     """
     game = True
+    blackjack = Blackjack(window)
+    blackjack_started = False
     while game:
         game = atualiza_estado(asset, state)
         if game == False:
             return
-        desenha(window, asset, state)
-
+        if state['tela_jogo'] == 'main':
+            asset['mapa'].desenha(window, asset, state)
+        elif state['tela_jogo'] == 'blackjack':
+            if not blackjack_started:
+                blackjack = Blackjack(window)
+                state['minigame'] = blackjack
+                blackjack.start()
+                blackjack_started = True
+            blackjack.desenha()
+            if not blackjack.isInMenu:
+                blackjack.finishGame()
+                blackjack.desenha(True)
+        
+        pygame.display.update()
 
 if __name__ == '__main__':
     game_loop(*inicializa())
