@@ -2,6 +2,7 @@ import pygame
 from const import *
 
 class Cassino():
+    """Inicializa classe do mapa do Cassino"""
     def __init__(self, asset):
         self.mapa = pygame.transform.scale(pygame.image.load('images/mapa.jpg'), (1280,720))
         self.objs = {}
@@ -10,6 +11,7 @@ class Cassino():
             self.objs[key] = pygame.transform.scale(img, img_sizes[key])
     
     def rects(self):
+        """Cria e pega Rect de todos os objetos no mapa"""
         pos = {}
         for i in range(3):
             try:
@@ -28,12 +30,58 @@ class Cassino():
 
         return pos
     
-    def desenha(self, window):
+    def interacoes(self, asset, state):
+        for event in pygame.event.get():
+            if state['aviso'] != None and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                state['tela_jogo'] = state['aviso']
+            if event.type == pygame.QUIT:
+                return False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
+                state['vel'][0] += 150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_d:
+                state['vel'][0] += -150
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
+                state['vel'][0] += -150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_a:
+                state['vel'][0] += 150
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+                state['vel'][1] += -150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_w:
+                state['vel'][1] += 150
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                state['vel'][1] += 150
+            elif event.type == pygame.KEYUP and event.key == pygame.K_s:
+                state['vel'][1] += -150
+        
+        asset['jogador'].pos[0] = asset['jogador'].pos[0] + state['vel'][0] * state['dt']
+        asset['jogador'].pos[1] = asset['jogador'].pos[1] + state['vel'][1] * state['dt']
+
+        #Check if player is outside bounds in x-axis
+        if asset['jogador'].pos[0] < 0 or asset['jogador'].pos[0] + asset['jogador'].size[0] >= 1280:
+            asset['jogador'].pos[0] = asset['jogador'].pos[0] - state['vel'][0] * state['dt']
+        
+        #Check if player is outside bounds in y-axis
+        if asset['jogador'].pos[1] < 0 or asset['jogador'].pos[1] + asset['jogador'].size[1] >= 720:
+            asset['jogador'].pos[1] = asset['jogador'].pos[1] - state['vel'][1] * state['dt']
+
+        for key, objs in asset['mapa'].rects().items():
+            for obj in objs:
+                if obj.colliderect(asset['jogador'].transform()):
+                    state['aviso'] = key
+                    return True
+                else:
+                    state['aviso'] = None
+        return True
+    
+    def desenha(self, window, asset, state):
+        """Desenha mapa e objetos"""
         window.blit(self.mapa, (0,0))
         for key, pos in self.rects().items():
             for p in pos:
                 window.blit(self.objs[key], p.topleft)
-                #if key == 'horse_race':
-                    #window.blit(pygame.font.Font(pygame.font.match_font('old english five'), 60).render('Horse Race', True, (0, 0, 0)), (p.left + 40, p.top + 30))
+        window.blit(asset['jogador'].img, (state['jogador']))
 
-    
+        if state['aviso'] != None:
+            pygame.draw.rect(window, (255,255,255), pygame.Rect(520, 600, 240, 120))
+            
+        return
