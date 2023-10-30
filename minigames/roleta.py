@@ -129,7 +129,6 @@ class Roleta:
                 self.sorted = True
                 index = random.randint(0, len(self.roulleteOrder) - 1)
                 self.sortedNumber = self.roulleteOrder[index]
-                print(self.sortedNumber)
                 if index != 0:
                     self.expectedAngle += (index / 37) * 360
             self.roleta = self.originalImage
