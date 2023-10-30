@@ -3,13 +3,14 @@
     padding: 0;
     list-style: none;
     text-decoration: none;
+    overflow-x: hidden;
 }
 
 /* ------------------------------------------------------------------------------- */
 
 .header {
     width: 100%;
-    height: 10vh;
+    height: 15vh;
     display: block;
     position: fixed;
     background-color: black;
@@ -28,7 +29,7 @@ p span {
 /* ------------------------------------------------------------------------------- */
 
 footer {
-    height: 10vh;
+    height: 5vh;
     background-color: black;
     display: fixed;
     position: relative;
@@ -83,7 +84,7 @@ footer p {
     width: 40%;
     float: right;
     display: flex;
-    height: 10vh;
+    height: 15vh;
     align-items: center;
     justify-content: right;
 }
@@ -102,7 +103,7 @@ footer p {
     display: table-cell;
     vertical-align: middle;
     font-family: monospace;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .navigation a li:hover {
@@ -117,3 +118,91 @@ footer p {
 }
 
 /* ------------------------------------------------------------------------------- */
+
+#jogo {
+    padding-top: 17vh;
+    padding-left: 15px;
+    height: 80vh;
+    width: 100%;
+    background-color: black;
+    border-bottom: 2px;
+    border-color: rgb(43, 43, 43);
+    border-bottom-style: solid;
+}
+
+#jogo h1 {
+    color: ghostwhite;
+    font-size: 40px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#download {
+    padding-top: 17vh;
+    padding-left: 15px;
+    height: 80vh;
+    width: 100%;
+    background-color: black;
+    border-bottom: 2px;
+    border-color: rgb(43, 43, 43);
+    border-bottom-style: solid;
+}
+
+#download h1 {
+    color: ghostwhite;
+    font-size: 40px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#como-jogar {
+    padding-top: 17vh;
+    padding-left: 15px;
+    height: 80vh;
+    width: 100%;
+    background-color: black;
+    border-bottom: 2px;
+    border-color: rgb(43, 43, 43);
+    border-bottom-style: solid;
+}
+
+#como-jogar h1 {
+    color: ghostwhite;
+    font-size: 40px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#sobre-nos {
+    padding-top: 17vh;
+    padding-left: 15px;
+    height: 80vh;
+    width: 100%;
+    background-color: black;
+    border-bottom: 2px;
+    border-color: rgb(43, 43, 43);
+    border-bottom-style: solid;
+}
+
+#sobre-nos h1 {
+    color: ghostwhite;
+    font-size: 40px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#contatos {
+    padding-top: 17vh;
+    padding-left: 15px;
+    height: 80vh;
+    width: 100%;
+    background-color: black;
+    border-bottom: 2px;
+    border-color: rgb(43, 43, 43);
+    border-bottom-style: solid;
+}
+
+#contatos h1 {
+    color: ghostwhite;
+    font-size: 40px;
+}
