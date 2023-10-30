@@ -41,11 +41,11 @@ class Cassino():
                 pos['blackjack'] += [pygame.Rect(*(30 + 177*i, 570), *(100,84))]
                 pos['slot_machine'] += [pygame.Rect(*(1010, 140 + 80*i), *(80,80))]
                 pos['slot_machine'] += [pygame.Rect(*(1160, 140 + 80*i), *(80,80))]
-                pos['roulette'] += [pygame.Rect(*(815 + 160*i, 475 + 65*i), *(100,100))]
+                pos['roleta'] += [pygame.Rect(*(815 + 160*i, 475 + 65*i), *(100,100))]
             except KeyError:
                 pos['blackjack'] = [pygame.Rect(*(30, 570), *(100,84))]
                 pos['slot_machine'] = [pygame.Rect(*(1010, 140), *(80,80)), pygame.Rect(*(1160, 140), *(80,80))]
-                pos['roulette'] = [pygame.Rect(*(815, 475), *(100,100))]
+                pos['roleta'] = [pygame.Rect(*(815, 475), *(100,100))]
         
         pos['horse_race'] = [pygame.Rect(*(970, 0), *(250,85))]
         pos['poker'] = [pygame.Rect(*(370, 210), *(290,150))]
@@ -53,13 +53,16 @@ class Cassino():
         return pos
     
     def interacoes(self, asset, state):
-
+        """Checa interações entre o jogador e objetos enquanto estiver no mapa do cassino"""
+        
         #Check interactions
         for event in pygame.event.get():
-            if state['aviso'] != None and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-                state['tela_jogo'] = state['aviso']
             if event.type == pygame.QUIT:
                 return False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                state['tela_jogo'] = 'menu'
+            elif state['aviso'] != None and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                state['tela_jogo'] = state['aviso']
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
                 state['vel'][0] += 150
             elif event.type == pygame.KEYUP and event.key == pygame.K_d:
@@ -115,8 +118,11 @@ class Cassino():
         for key, pos in self.rects().items():
             for p in pos:
                 window.blit(self.objs[key], p.topleft)
+                if key == 'horse_race':
+                    pos = self.rects()['horse_race'][0]
+                    window.blit(asset['old_font'].render('Horse Race', True, (0, 0, 0)), (pos.x + 45, pos.y + 27))
+        
         window.blit(asset['jogador'].img, (state['jogador']))
-
 
         if state['aviso'] != None:
             pygame.draw.rect(window, (255,255,255), pygame.Rect(450, 630, 380, 90))
