@@ -2,6 +2,7 @@ import pygame
 import os
 from tela_main import *
 from minigames.blackjack import *
+from tela_menu import *
 from player import Player
 
 def inicializa():
@@ -13,10 +14,10 @@ def inicializa():
     pygame.display.set_caption('Cassino')
 
     asset = {
-        'def_font' : pygame.font.Font(pygame.font.get_default_font(), 16),
-        'leg_font' : pygame.font.Font(pygame.font.get_default_font(), 12),
+        'def_font' : pygame.font.Font(pygame.font.get_default_font(), 15),
+        'leg_font' : pygame.font.Font(pygame.font.get_default_font(), 11),
         'money_font' : pygame.font.Font(pygame.font.match_font('Abel'), 30),
-        'old_font' : pygame.font.Font(pygame.font.match_font('Abel'), 30),
+        'old_font' : pygame.font.Font(pygame.font.match_font('Old English Five'), 45),
         'objs' : {},
         'personagens' : {},
     }
@@ -55,7 +56,12 @@ def atualiza_estado(asset, state):
 
     if state['tela_jogo'] == 'main':
         return asset['mapa'].interacoes(asset, state)
+    elif state['tela_jogo'] == 'menu':
+        return Menu().interacoes(state)
     elif state['tela_jogo'] == 'blackjack':
+        if not state['minigame'].interacoes():
+            state['tela_jogo'] = 'main'
+    elif state['tela_jogo'] == 'roleta':
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
         
@@ -74,7 +80,12 @@ def game_loop(window, asset, state):
             return
         if state['tela_jogo'] == 'main':
             asset['mapa'].desenha(window, asset, state)
+<<<<<<< HEAD
             blackjack_started = False
+=======
+        elif state['tela_jogo'] ==  'menu':
+            Menu().desenha(window)
+>>>>>>> 82736214e34dfe286bd3b9de7e316024f86af5ee
         elif state['tela_jogo'] == 'blackjack':
             if not blackjack_started:
                 blackjack = Blackjack(window)
@@ -91,9 +102,9 @@ def game_loop(window, asset, state):
                 blackjack.resultGame = None
                 blackjack.desenha(True)
         if state['dinheiro'] >= 0:
-            window.blit(asset['money_font'].render(f'Saldo: ${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
+            window.blit(asset['money_font'].render(f'Balance: ${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
         else:
-            window.blit(asset['money_font'].render(f'Saldo: ${state["dinheiro"]}', True, (255, 0, 0)), (10,10))
+            window.blit(asset['money_font'].render(f'Balance: ${state["dinheiro"]}', True, (255, 0, 0)), (10,10))
         pygame.display.update()
 
 if __name__ == '__main__':
