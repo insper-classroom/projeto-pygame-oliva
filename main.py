@@ -80,8 +80,12 @@ def game_loop(window, asset, state):
             return
         if state['tela_jogo'] == 'main':
             asset['mapa'].desenha(window, asset, state)
+<<<<<<< HEAD
+            blackjack_started = False
+=======
         elif state['tela_jogo'] ==  'menu':
             Menu().desenha(window)
+>>>>>>> 82736214e34dfe286bd3b9de7e316024f86af5ee
         elif state['tela_jogo'] == 'blackjack':
             if not blackjack_started:
                 blackjack = Blackjack(window)
@@ -91,6 +95,11 @@ def game_loop(window, asset, state):
             blackjack.desenha()
             if not blackjack.isInMenu:
                 blackjack.finishGame()
+                if blackjack.resultGame == 'win':
+                    state['dinheiro'] += 100
+                elif blackjack.resultGame == 'lose':
+                    state['dinheiro'] -= 100
+                blackjack.resultGame = None
                 blackjack.desenha(True)
         if state['dinheiro'] >= 0:
             window.blit(asset['money_font'].render(f'Balance: ${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
