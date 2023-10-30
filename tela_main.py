@@ -111,6 +111,8 @@ class Cassino():
     def desenha(self, window, asset, state):
         """Desenha mapa e objetos"""
 
+        for parede in self.paredes:
+            pygame.draw.rect(window, (0,0,0), parede)
 
         window.blit(self.mapa, (0,0))
         for key, pos in self.rects().items():
@@ -120,8 +122,6 @@ class Cassino():
                     pos = self.rects()['horse_race'][0]
                     window.blit(asset['old_font'].render('Horse Race', True, (0, 0, 0)), (pos.x + 45, pos.y + 27))
         
-        for parede in self.paredes:
-            pygame.draw.rect(window, (0,0,0), parede)
         window.blit(asset['jogador'].img, (state['jogador']))
 
         if state['aviso'] != None:
