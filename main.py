@@ -65,7 +65,7 @@ def atualiza_estado(asset, state):
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
         
-        return True
+    return True
 
 def game_loop(window, asset, state):
     """
