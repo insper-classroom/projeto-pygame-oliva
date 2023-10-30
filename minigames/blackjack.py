@@ -21,6 +21,8 @@ class Blackjack():
         self.reset = False
         self.resetButton = pygame.rect.Rect(510, 650, 100, 50)
         self.finishButton = pygame.rect.Rect(660, 650, 100, 50)
+        self.resultGame = None
+        self.giveResult = False
 
     def start(self):
         """Inicia o jogo criando o baralho e distribuindo cartas para o jogador e o dealer"""
@@ -116,15 +118,24 @@ class Blackjack():
         while self.dealerPoints < 17:
             self.addCard(False)
             self.dealerPoints = sum(map(self.getCardValue, self.dealerCards))
+        self.reset = True
         if self.dealerPoints > 21 and self.userPoints <= 21:
+            if not self.giveResult:
+                self.resultGame = 'win'
+                self.giveResult = True
             self.resultMessage = 'Você ganhou!'
         elif (self.userPoints <= 21) and (21 - self.userPoints) < (21 - self.dealerPoints):
+            if not self.giveResult:
+                self.resultGame = 'win'
+                self.giveResult = True
             self.resultMessage = 'Você ganhou!'
         elif self.userPoints == self.dealerPoints and self.userPoints <= 21:
             self.resultMessage = 'Empate!'
         else:
+            if not self.giveResult:
+                self.resultGame = 'lose'
+                self.giveResult = True
             self.resultMessage = 'Você perdeu!'
-        self.reset = True
 
     def resetGame(self):
         """Reinicia o jogo"""
@@ -136,6 +147,8 @@ class Blackjack():
         self.dealerPoints = 0
         self.resultMessage = ''
         self.reset = False
+        self.giveResult = False
+        self.resultGame = None
         self.start()
 
     def interacoes(self):
