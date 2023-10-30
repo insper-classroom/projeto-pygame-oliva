@@ -2,6 +2,7 @@ import pygame
 import os
 from tela_main import *
 from minigames.blackjack import *
+from tela_menu import *
 from player import Player
 
 def inicializa():
@@ -16,7 +17,7 @@ def inicializa():
         'def_font' : pygame.font.Font(pygame.font.get_default_font(), 15),
         'leg_font' : pygame.font.Font(pygame.font.get_default_font(), 11),
         'money_font' : pygame.font.Font(pygame.font.match_font('Abel'), 30),
-        'old_font' : pygame.font.Font(pygame.font.match_font('Old English Five'), 30),
+        'old_font' : pygame.font.Font(pygame.font.match_font('Old English Five'), 45),
         'objs' : {},
         'personagens' : {},
     }
@@ -55,7 +56,12 @@ def atualiza_estado(asset, state):
 
     if state['tela_jogo'] == 'main':
         return asset['mapa'].interacoes(asset, state)
+    elif state['tela_jogo'] == 'menu':
+        return Menu().interacoes(state)
     elif state['tela_jogo'] == 'blackjack':
+        if not state['minigame'].interacoes():
+            state['tela_jogo'] = 'main'
+    elif state['tela_jogo'] == 'roleta':
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
         
@@ -74,6 +80,8 @@ def game_loop(window, asset, state):
             return
         if state['tela_jogo'] == 'main':
             asset['mapa'].desenha(window, asset, state)
+        elif state['tela_jogo'] ==  'menu':
+            Menu().desenha(window)
         elif state['tela_jogo'] == 'blackjack':
             if not blackjack_started:
                 blackjack = Blackjack(window)
