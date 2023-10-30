@@ -15,7 +15,7 @@
     position: fixed;
     background-color: black;
     font-family: monospace;
-    border-bottom: 1px;
+    border-bottom: 3px;
     border-color: rgb(43, 43, 43);
     border-bottom-style: solid;
 }
@@ -121,12 +121,12 @@ footer p {
 
 #jogo {
     padding-top: 17vh;
-    padding-left: 15px;
+    padding-left: 20px;
     height: 80vh;
     width: 100%;
     background-color: black;
-    border-bottom: 2px;
-    border-color: rgb(43, 43, 43);
+    border-bottom: 3px;
+    border-color: rgb(59, 59, 59);
     border-bottom-style: solid;
 }
 
@@ -139,12 +139,12 @@ footer p {
 
 #download {
     padding-top: 17vh;
-    padding-left: 15px;
+    padding-left: 20px;
     height: 80vh;
     width: 100%;
     background-color: black;
-    border-bottom: 2px;
-    border-color: rgb(43, 43, 43);
+    border-bottom: 3px;
+    border-color: rgb(59, 59, 59);
     border-bottom-style: solid;
 }
 
@@ -157,12 +157,12 @@ footer p {
 
 #como-jogar {
     padding-top: 17vh;
-    padding-left: 15px;
+    padding-left: 20px;
     height: 80vh;
     width: 100%;
     background-color: black;
-    border-bottom: 2px;
-    border-color: rgb(43, 43, 43);
+    border-bottom: 3px;
+    border-color: rgb(59, 59, 59);
     border-bottom-style: solid;
 }
 
@@ -175,12 +175,12 @@ footer p {
 
 #sobre-nos {
     padding-top: 17vh;
-    padding-left: 15px;
+    padding-left: 20px;
     height: 80vh;
     width: 100%;
     background-color: black;
-    border-bottom: 2px;
-    border-color: rgb(43, 43, 43);
+    border-bottom: 3px;
+    border-color: rgb(59, 59, 59);
     border-bottom-style: solid;
 }
 
@@ -193,12 +193,12 @@ footer p {
 
 #contatos {
     padding-top: 17vh;
-    padding-left: 15px;
+    padding-left: 20px;
     height: 80vh;
     width: 100%;
     background-color: black;
-    border-bottom: 2px;
-    border-color: rgb(43, 43, 43);
+    border-bottom: 3px;
+    border-color: rgb(59, 59, 59);
     border-bottom-style: solid;
 }
 
