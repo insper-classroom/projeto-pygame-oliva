@@ -79,8 +79,8 @@ class Buttons():
 class Roleta:
     def __init__(self, window):
         self.window = window
-        self.originalImage = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roulette.png')), (400, 400))
-        self.roleta = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roulette.png')), (400, 400))
+        self.originalImage = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roleta.png')), (400, 400))
+        self.roleta = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roleta.png')), (400, 400))
         self.roletaAngle = 0
         self.ballPos = [640, 250]
         self.columns = [[1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34], [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35], [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]]
@@ -88,7 +88,7 @@ class Roleta:
         self.roulleteOrder = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
         self.blackNumbers = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
         self.redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]
-        self.isPlaying = False
+        self.isPlaying = True
         self.bets = []
         self.lastUptaded = 0
         self.actualAngle = 0
