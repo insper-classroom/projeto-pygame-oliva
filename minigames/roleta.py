@@ -111,7 +111,10 @@ class JogarButton():
 
     def desenha(self, isBlack):
         pygame.draw.circle(self.window, (0, 0, 0), (self.x, self.y), self.radius)  # Desenha um círculo preto
-        pygame.draw.circle(self.window, (255, 0, 0), (self.x, self.y), self.radius - 5)  # Desenha um círculo vermelho menor no centro
+        if not isBlack:
+            pygame.draw.circle(self.window, (255, 0, 0), (self.x, self.y), self.radius - 5)  # Desenha um círculo vermelho menor no centro
+        else:
+            pygame.draw.circle(self.window, (0, 0, 0), (self.x, self.y), self.radius - 5)  # Desenha um círculo vermelho menor no centro
         self.drawText(self.text, self.x, self.y, self.font, (255, 255, 255))  # Centraliza o texto no centro do botão
 
     def drawText(self, text, x, y, font, color):
@@ -140,10 +143,13 @@ class Roleta:
         self.sorted = False
         self.radio = 150
         self.jogar = JogarButton(1100, 575, 'Jogar', 'Jogar', self.window)
+        self.fechar = JogarButton(110, 575, 'Fechar', 'Fechar', self.window)
         self.resetGameButton = ColorButtons((1280 // 2) - 147 // 2, (720 // 2) + 250, 'Reiniciar', 'Reiniciar', self.window)
         self.resultMenu = False
         self.resultMessage = ''
         self.resultGive = False
+        self.giveMoney = False
+        self.money = 0
         self.betsButtons = [
             [Zero(387, 510, 0, self.window)],
             [Buttons(425 + (i * 37), 510, self.columns[2][i], self.window) for i in range(12)],
@@ -161,6 +167,7 @@ class Roleta:
         self.window.blit(self.roleta, roleta_rect)
         time = pygame.time.get_ticks()
         if not self.isPlaying:
+            self.fechar.desenha(True)
             if (time - self.lastUptaded) / 1000 >= 0.01:
                 self.lastUptaded = time
                 self.roletaAngle += 1
@@ -225,8 +232,10 @@ class Roleta:
                                     winQnt += 10 * 2
                 if status:
                     self.resultMessage = f'Você ganhou R$ {winQnt:.2f}!'
+                    self.money = winQnt
                 else:
                     self.resultMessage = f'Você perdeu R${(len(self.bets) * 10):.2f}!'
+                    self.money = - (len(self.bets) * 10)
             font = pygame.font.Font(pygame.font.get_default_font(), 36)
             text_surface = font.render(self.resultMessage, True, (255, 255, 255))
             text_width, text_height = text_surface.get_size()
@@ -240,7 +249,7 @@ class Roleta:
             for button in col:
                 button.desenha(True if button.value in self.blackNumbers else False)
         if len(self.bets) > 0:
-            self.jogar.desenha(True)
+            self.jogar.desenha(False)
 
     def interacoes(self):
         for event in pygame.event.get():
@@ -249,6 +258,8 @@ class Roleta:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if not self.isPlaying:
                     for col in self.betsButtons:
+                        if self.fechar.rect.collidepoint(event.pos):
+                            return False
                         for button in col:
                             if button.rect.collidepoint(event.pos):
                                 if button.value not in self.bets:
@@ -279,6 +290,8 @@ class Roleta:
         self.resultMenu = False
         self.resultMessage = ''
         self.resultGive = False
+        self.giveMoney = False
+        self.money = 0
 
 if __name__ == '__main__':
     playing = True
