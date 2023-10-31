@@ -1,9 +1,10 @@
 import pygame
 import os
-from telas.tela_main import *
-from telas.tela_menu import *
-from telas.tela_config import *
-from minigames.blackjack import *
+from telas.tela_main import Cassino
+from telas.tela_menu import Menu
+from telas.tela_config import Config
+from minigames.blackjack import Blackjack
+from minigames.roleta import Roleta
 from player import Player
 
 def inicializa():
@@ -80,6 +81,8 @@ def game_loop(window, asset, state):
     game = True
     blackjack = Blackjack(window)
     blackjack_started = False
+    roleta = Roleta(window)
+    roleta_started = False
     while game:
         game = atualiza_estado(window, asset, state)
         if game == False:
@@ -87,6 +90,7 @@ def game_loop(window, asset, state):
         if state['tela_jogo'] == 'main':
             asset['mapa'].desenha(window, asset, state)
             blackjack_started = False
+            roleta_started = False
         elif state['tela_jogo'] ==  'menu':
             Menu().desenha(window, asset)
         elif state['tela_jogo'] == 'config':
@@ -106,6 +110,12 @@ def game_loop(window, asset, state):
                     state['dinheiro'] -= 100
                 blackjack.resultGame = None
                 blackjack.desenha(True)
+        elif state['tela_jogo'] == 'roleta':
+            if not roleta_started:
+                roleta = Roleta(window)
+                state['minigame'] = roleta
+                roleta_started = True
+            roleta.desenha()
         if state['dinheiro'] >= 0:
             window.blit(asset['money_font'].render(f'Balance: ${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
         else:
