@@ -232,10 +232,9 @@ class Roleta:
                                     winQnt += 10 * 2
                 if status:
                     self.resultMessage = f'Você ganhou R$ {winQnt:.2f}!'
-                    self.money = winQnt
+                    self.money += winQnt
                 else:
                     self.resultMessage = f'Você perdeu R${(len(self.bets) * 10):.2f}!'
-                    self.money = - (len(self.bets) * 10)
             font = pygame.font.Font(pygame.font.get_default_font(), 36)
             text_surface = font.render(self.resultMessage, True, (255, 255, 255))
             text_width, text_height = text_surface.get_size()
@@ -269,6 +268,7 @@ class Roleta:
                                 return True
                     if self.jogar.rect.collidepoint(event.pos):
                         self.isPlaying = True
+                        self.money = - (len(self.bets) * 10)
                 else:
                     if self.resetGameButton.rect.collidepoint(event.pos):
                         self.resetGame()
