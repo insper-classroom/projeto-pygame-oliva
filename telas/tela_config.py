@@ -32,7 +32,7 @@ class Config:
         pygame.draw.rect(window, (0,0,0), rect)
         pygame.draw.rect(window, (255,0,0), x)
 
-        palavra = pygame.font.Font(pygame.font.get_default_font(), 15).render('X', True, (255, 255, 255))
-        window.blit(palavra, (self.buttons[0].width/2 - palavra.get_width()/2, self.buttons[0].y))
+        palavra = pygame.font.Font(pygame.font.get_default_font(), 15).render('x', True, (255, 255, 255))
+        window.blit(palavra, (self.buttons[0].x + self.buttons[0].width/2 - palavra.get_width()/2, self.buttons[0].y + self.buttons[0].height/2 - palavra.get_height()/2))
 
         return
