@@ -33,10 +33,12 @@ class Blackjack():
             card = random.randint(0, len(self.deck) - 1)
             self.userCards.append(self.deck[card])
             self.deck.pop(card)
+        self.userPoints = sum(map(self.getCardValue, self.userCards))
         for _ in range(2):
             card = random.randint(0, len(self.deck) - 1)
             self.dealerCards.append(self.deck[card])
             self.deck.pop(card)
+        self.dealerPoints = self.getCardValue(self.dealerCards[0])
 
     def createDeck(self):
         """Cria o baralho com cartas de imagem"""
@@ -58,7 +60,7 @@ class Blackjack():
         
         for index, card in enumerate(self.userCards):
             self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXUser + (index * 150), 420))
-        
+        self.drawText(f'Sua pontuação: {self.userPoints}', startXUser - 225, 420 + (181 // 2), self.font, (255, 255, 255))
         for index, card in enumerate(self.dealerCards):
             if not status:
                 if index == 0:
@@ -68,6 +70,7 @@ class Blackjack():
             else:
                 self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
         
+        self.drawText(f'Pontuação Mesa: {self.dealerPoints}', startXDealer - 225, 100 + (181 // 2), self.font, (255, 255, 255))
         if self.isInMenu:
             self.drawButtons()
         

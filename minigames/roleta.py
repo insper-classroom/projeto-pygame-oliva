@@ -4,6 +4,9 @@ import random
 import math
 
 class Zero():
+    """
+    Classe que representa o botão 0 da roleta
+    """
     def __init__(self, x, y, value, window):
         self.x = x
         self.y = y
@@ -14,14 +17,23 @@ class Zero():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 16)
     
     def desenha(self, isBlack):
+        """
+        Desenha o botão 0 da roleta
+        """
         pygame.draw.rect(self.window, (0, 255, 0), self.rect)
         self.drawText(str(self.value), self.x + (18 - 6), self.y + (58 - 6), self.font, (0, 0, 0))
 
     def drawText(self, text, x, y, font, color):
+        """
+        Desenha um texto no centro do botão
+        """
         text_surface = font.render(text, True, color)
         self.window.blit(text_surface, (x, y))
 
 class Column():
+    """
+    Classe para representar as colunas da roleta
+    """
     def __init__(self, x, y, text, value, window):
         self.x = x
         self.y = y
@@ -32,14 +44,23 @@ class Column():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 12)
     
     def desenha(self, isBlack):
+        """
+        Desenha uma coluna da roleta
+        """
         pygame.draw.rect(self.window, (0, 0, 0), self.rect)
         self.drawText(str(self.text), self.x + (36 - 12), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
+        """
+        Desenha um texto no centro do botão
+        """
         text_surface = font.render(text, True, color)
         self.window.blit(text_surface, (x, y))
 
 class Dozens():
+    """
+    Classe para representar as dúzias da roleta
+    """
     def __init__(self, x, y, text, value, window):
         self.x = x
         self.y = y
@@ -50,13 +71,22 @@ class Dozens():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 14)
     
     def desenha(self, isBlack):
+        """
+        Desenha a dúzia da roleta
+        """
         pygame.draw.rect(self.window, (0, 0, 0), self.rect)
         self.drawText(str(self.text), self.x + ((147 // 2) - 12 - (len(self.text))), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
+        """
+        Desenha um texto no centro do botão
+        """
         text_surface = font.render(text, True, color)
         self.window.blit(text_surface, (x, y))
 class Buttons():
+    """
+    Classe para representar os botões da roleta
+    """
     def __init__(self, x, y, value, window):
         self.x = x
         self.y = y
@@ -66,6 +96,9 @@ class Buttons():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 12)
     
     def desenha(self, isBlack):
+        """
+        Desenha o botão da roleta
+        """
         if isBlack:
             pygame.draw.rect(self.window, (0, 0, 0), self.rect)
         else:
@@ -73,10 +106,16 @@ class Buttons():
         self.drawText(str(self.value), self.x + (18 - 6), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
+        """
+        Desenha um texto no centro do botão
+        """
         text_surface = font.render(text, True, color)
         self.window.blit(text_surface, (x, y))
 
 class ColorButtons():
+    """
+    Classe para representar os botões de vermelho e preto da roleta
+    """
     def __init__(self, x, y, text, value, window):
         self.x = x
         self.y = y
@@ -87,6 +126,9 @@ class ColorButtons():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 14)
     
     def desenha(self, isBlack):
+        """
+        Desenha os botões coloridos da roleta
+        """
         if self.value[1] == 'vermelho':
             pygame.draw.rect(self.window, (255, 0, 0), self.rect)
             self.drawText(str(self.text), self.x + ((147 // 2) - 20 - (len(self.text))), self.y + (18 - 6), self.font, (255, 255, 255))
@@ -95,10 +137,16 @@ class ColorButtons():
             self.drawText(str(self.text), self.x + ((147 // 2) - 12 - (len(self.text))), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
+        """
+        Desenha um texto no centro do botão
+        """
         text_surface = font.render(text, True, color)
         self.window.blit(text_surface, (x, y))
 
 class JogarButton():
+    """
+    Classe para representar o botão de jogar da roleta
+    """
     def __init__(self, x, y, text, value, window):
         self.x = x
         self.y = y
@@ -110,6 +158,9 @@ class JogarButton():
         self.rect = pygame.rect.Rect(x - self.radius, y - self.radius, self.radius * 2, self.radius * 2)
 
     def desenha(self, isBlack):
+        """
+        Desenha o botão de jogar da roleta
+        """
         pygame.draw.circle(self.window, (0, 0, 0), (self.x, self.y), self.radius)  # Desenha um círculo preto
         if not isBlack:
             pygame.draw.circle(self.window, (255, 0, 0), (self.x, self.y), self.radius - 5)  # Desenha um círculo vermelho menor no centro
@@ -118,12 +169,21 @@ class JogarButton():
         self.drawText(self.text, self.x, self.y, self.font, (255, 255, 255))  # Centraliza o texto no centro do botão
 
     def drawText(self, text, x, y, font, color):
+        """
+        Desenha um texto no centro do botão
+        """
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect(center=(x, y))
         self.window.blit(text_surface, text_rect)
 
 class Roleta:
+    """
+    Classe para representar a roleta
+    """
     def __init__(self, window):
+        """
+        Inicializa a roleta
+        """
         self.window = window
         self.originalImage = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roleta.png')), (400, 400))
         self.roleta = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roleta.png')), (400, 400))
@@ -161,6 +221,9 @@ class Roleta:
         ]
 
     def desenha(self):
+        """
+        Desenha a roleta
+        """
         self.window.fill((2, 85, 0))
 
         roleta_rect = self.roleta.get_rect(center=(640, 250))
@@ -244,6 +307,9 @@ class Roleta:
             self.resetGameButton.desenha(True)
 
     def drawButtons(self):
+        """
+        Desenha os botões da roleta
+        """
         for col in self.betsButtons:
             for button in col:
                 button.desenha(True if button.value in self.blackNumbers else False)
@@ -251,6 +317,9 @@ class Roleta:
             self.jogar.desenha(False)
 
     def interacoes(self):
+        """
+        Faz todas as interações do jogo
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
@@ -275,6 +344,9 @@ class Roleta:
         return True
     
     def resetGame(self):
+        """
+        Reseta o jogo
+        """
         self.originalImage = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roleta.png')), (400, 400))
         self.roleta = pygame.transform.scale(pygame.image.load(os.path.join('images', 'objs', 'roleta.png')), (400, 400))
         self.roletaAngle = 0
