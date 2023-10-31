@@ -33,9 +33,9 @@ class Menu:
         i = 0
         fonte = pygame.font.Font(pygame.font.get_default_font(), 18)
         for rect in self.rects.values():
-            pygame.draw.rect(window, (80,80,80), rect)
-            palavra = fonte.render(Menu().keys[i], True, (0, 0, 0))
-            window.blit(palavra, (asset['tam_tela'][0]/2 - palavra.get_width()/2, 150 + 140*i))
+            pygame.draw.rect(window, (0,0,0), rect)
+            palavra = fonte.render(Menu().keys[i], True, (255,255,255))
+            window.blit(palavra, (asset['tam_tela'][0]/2 - palavra.get_width()/2, 150 + 140*i - palavra.get_height()/2))
 
             i+=1
         
