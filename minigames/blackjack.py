@@ -75,7 +75,7 @@ class Blackjack():
             self.drawButtons()
         
         if self.reset:
-            self.drawText(self.resultMessage, 570, 350, self.font, (255, 255, 255))
+            self.drawText(self.resultMessage, (1280 // 2) - (len(self.resultMessage)) - 100, 350, self.font, (255, 255, 255))
             pygame.draw.rect(self.window, (0, 128, 0), self.resetButton)
             pygame.draw.rect(self.window, (255, 0, 0), self.finishButton)
             self.drawText("Reiniciar", 515, 665, self.font, (255, 255, 255))
@@ -126,19 +126,19 @@ class Blackjack():
             if not self.giveResult:
                 self.resultGame = 'win'
                 self.giveResult = True
-            self.resultMessage = 'Você ganhou!'
+            self.resultMessage = 'Você ganhou R$100,00'
         elif (self.userPoints <= 21) and (21 - self.userPoints) < (21 - self.dealerPoints):
             if not self.giveResult:
                 self.resultGame = 'win'
                 self.giveResult = True
-            self.resultMessage = 'Você ganhou!'
+            self.resultMessage = 'Você ganhou R$100,00'
         elif self.userPoints == self.dealerPoints and self.userPoints <= 21:
             self.resultMessage = 'Empate!'
         else:
             if not self.giveResult:
                 self.resultGame = 'lose'
                 self.giveResult = True
-            self.resultMessage = 'Você perdeu!'
+            self.resultMessage = 'Você perdeu R$100,00'
 
     def resetGame(self):
         """Reinicia o jogo"""
