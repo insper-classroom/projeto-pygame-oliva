@@ -116,6 +116,11 @@ def game_loop(window, asset, state):
                 state['minigame'] = roleta
                 roleta_started = True
             roleta.desenha()
+            if roleta.resultMenu:
+                if not roleta.giveMoney:
+                    state['dinheiro'] += roleta.money
+                    roleta.money = 0
+                    roleta.giveMoney = True
         if state['dinheiro'] >= 0:
             window.blit(asset['money_font'].render(f'Balance: ${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
         else:
