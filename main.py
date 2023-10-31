@@ -1,19 +1,20 @@
 import pygame
 import os
-from tela_main import *
+from telas.tela_main import *
+from telas.tela_menu import *
+from telas.tela_config import *
 from minigames.blackjack import *
-from tela_menu import *
 from player import Player
 
 def inicializa():
     """
     Inicializa todas as informações e objetos do jogo.
     """
+
     pygame.init()
-    window = pygame.display.set_mode((1280, 720))
-    pygame.display.set_caption('Cassino')
 
     asset = {
+        **Config().asset,
         'def_font' : pygame.font.Font(pygame.font.get_default_font(), 15),
         'leg_font' : pygame.font.Font(pygame.font.get_default_font(), 11),
         'money_font' : pygame.font.Font(pygame.font.match_font('Abel'), 30),
@@ -21,6 +22,9 @@ def inicializa():
         'objs' : {},
         'personagens' : {},
     }
+
+    window = pygame.display.set_mode(tuple(asset['tam_tela']))
+    pygame.display.set_caption('Cassino')
 
     for img in os.listdir('images/objs'):
         asset['objs'][img[:-4]] = pygame.image.load(f'images/objs/{img}')
@@ -46,7 +50,7 @@ def inicializa():
 
     return window, asset, state
 
-def atualiza_estado(asset, state):
+def atualiza_estado(window, asset, state):
     """
     Atualiza estado do jogo, e checa ações e interações.
     """
@@ -58,6 +62,8 @@ def atualiza_estado(asset, state):
         return asset['mapa'].interacoes(asset, state)
     elif state['tela_jogo'] == 'menu':
         return Menu().interacoes(state)
+    elif state['tela_jogo'] == 'config':
+        return Config().interacoes(window, asset, state)
     elif state['tela_jogo'] == 'blackjack':
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
@@ -75,17 +81,16 @@ def game_loop(window, asset, state):
     blackjack = Blackjack(window)
     blackjack_started = False
     while game:
-        game = atualiza_estado(asset, state)
+        game = atualiza_estado(window, asset, state)
         if game == False:
             return
         if state['tela_jogo'] == 'main':
             asset['mapa'].desenha(window, asset, state)
-<<<<<<< HEAD
             blackjack_started = False
-=======
         elif state['tela_jogo'] ==  'menu':
-            Menu().desenha(window)
->>>>>>> 82736214e34dfe286bd3b9de7e316024f86af5ee
+            Menu().desenha(window, asset)
+        elif state['tela_jogo'] == 'config':
+                Config().desenha(window)
         elif state['tela_jogo'] == 'blackjack':
             if not blackjack_started:
                 blackjack = Blackjack(window)
