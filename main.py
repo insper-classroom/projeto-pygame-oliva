@@ -24,7 +24,7 @@ def inicializa():
         'personagens' : {},
     }
 
-    window = pygame.display.set_mode(tuple(asset['tam_tela']))
+    window = pygame.display.set_mode(tuple(asset['tam_tela']), vsync=asset['vsync'], flags=pygame.SCALED)
     pygame.display.set_caption('Cassino')
 
     for img in os.listdir('images/objs'):

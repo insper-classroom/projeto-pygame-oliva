@@ -5,6 +5,7 @@ class Config:
     def __init__(self):
         self.asset = {
             'tam_tela' : [1280, 720],
+            'vsync' : True,
             'vol_musica' : 100,
         }
 
