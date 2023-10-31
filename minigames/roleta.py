@@ -14,7 +14,7 @@ class Zero():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 16)
     
     def desenha(self, isBlack):
-        pygame.draw.rect(window, (0, 255, 0), self.rect)
+        pygame.draw.rect(self.window, (0, 255, 0), self.rect)
         self.drawText(str(self.value), self.x + (18 - 6), self.y + (58 - 6), self.font, (0, 0, 0))
 
     def drawText(self, text, x, y, font, color):
@@ -32,7 +32,7 @@ class Column():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 12)
     
     def desenha(self, isBlack):
-        pygame.draw.rect(window, (0, 0, 0), self.rect)
+        pygame.draw.rect(self.window, (0, 0, 0), self.rect)
         self.drawText(str(self.text), self.x + (36 - 12), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
@@ -50,7 +50,7 @@ class Dozens():
         self.font = pygame.font.Font(pygame.font.get_default_font(), 14)
     
     def desenha(self, isBlack):
-        pygame.draw.rect(window, (0, 0, 0), self.rect)
+        pygame.draw.rect(self.window, (0, 0, 0), self.rect)
         self.drawText(str(self.text), self.x + ((147 // 2) - 12 - (len(self.text))), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
@@ -67,9 +67,9 @@ class Buttons():
     
     def desenha(self, isBlack):
         if isBlack:
-            pygame.draw.rect(window, (0, 0, 0), self.rect)
+            pygame.draw.rect(self.window, (0, 0, 0), self.rect)
         else:
-            pygame.draw.rect(window, (255, 0, 0), self.rect)
+            pygame.draw.rect(self.window, (255, 0, 0), self.rect)
         self.drawText(str(self.value), self.x + (18 - 6), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
@@ -88,10 +88,10 @@ class ColorButtons():
     
     def desenha(self, isBlack):
         if self.value[1] == 'vermelho':
-            pygame.draw.rect(window, (255, 0, 0), self.rect)
+            pygame.draw.rect(self.window, (255, 0, 0), self.rect)
             self.drawText(str(self.text), self.x + ((147 // 2) - 20 - (len(self.text))), self.y + (18 - 6), self.font, (255, 255, 255))
         else:
-            pygame.draw.rect(window, (0, 0, 0), self.rect)
+            pygame.draw.rect(self.window, (0, 0, 0), self.rect)
             self.drawText(str(self.text), self.x + ((147 // 2) - 12 - (len(self.text))), self.y + (18 - 6), self.font, (255, 255, 255))
 
     def drawText(self, text, x, y, font, color):
