@@ -64,21 +64,21 @@ class Cassino():
             elif state['aviso'] != None and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                 state['tela_jogo'] = state['aviso']
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
-                state['vel'][0] += 150
+                state['vel'][0] += 250
             elif event.type == pygame.KEYUP and event.key == pygame.K_d:
-                state['vel'][0] += -150
+                state['vel'][0] += -250
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                state['vel'][0] += -150
+                state['vel'][0] += -250
             elif event.type == pygame.KEYUP and event.key == pygame.K_a:
-                state['vel'][0] += 150
+                state['vel'][0] += 250
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                state['vel'][1] += -150
+                state['vel'][1] += -250
             elif event.type == pygame.KEYUP and event.key == pygame.K_w:
-                state['vel'][1] += 150
+                state['vel'][1] += 250
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                state['vel'][1] += 150
+                state['vel'][1] += 250
             elif event.type == pygame.KEYUP and event.key == pygame.K_s:
-                state['vel'][1] += -150
+                state['vel'][1] += -250
         
         #Move player
         asset['jogador'].pos[0] = asset['jogador'].pos[0] + state['vel'][0] * state['dt']
