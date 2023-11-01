@@ -22,7 +22,7 @@ class Menu:
                         elif key == 'Configurações':
                             state['tela_jogo'] = 'config'
                         elif key == 'Como Jogar':
-                            pass
+                            state['tela_jogo'] = 'como_jogar'
                         elif key == 'Sobre Nós':
                             webbrowser.open('https://henriquebrnetto.github.io/personal-website/index.html')
                             return True
