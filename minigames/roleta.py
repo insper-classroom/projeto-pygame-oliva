@@ -216,7 +216,7 @@ class Roleta:
             [Buttons(425 + (i * 37), 550, self.columns[1][i], self.window) for i in range(12)],
             [Buttons(425 + (i * 37), 590, self.columns[0][i], self.window) for i in range(12)],
             [Column(869, 510, '2 to 1', ['coluna', 3], self.window), Column(869, 550, '2 to 1', ['coluna', 2], self.window), Column(869, 590, '2 to 1', ['coluna', 1], self.window)],
-            [Dozens(425, 630, '1 to 12', ['duzia', 3], self.window), Dozens(573, 630, '13 to 24', ['duzia', 2], self.window), Dozens(721, 630, '25 to 36', ['duzia', 1], self.window)],
+            [Dozens(425, 630, '1 to 12', ['duzia', 1], self.window), Dozens(573, 630, '13 to 24', ['duzia', 2], self.window), Dozens(721, 630, '25 to 36', ['duzia', 3], self.window)],
             [ColorButtons(500, 667, 'Vermelho', ['cor', 'vermelho'], self.window), ColorButtons(650, 667, 'Preto', ['cor', 'preto'], self.window)],
         ]
 
