@@ -11,6 +11,12 @@ corrida de cavalo
 ------ mecanismos -----
 
 agiota
-interação com o dealer
+interação com o dealer (?)
+
+------ adicionais ------
+
+lista de apostas feitas na roleta enquanto gira
+menu de configurações
+menu de instruções
 
 
