@@ -15,3 +15,9 @@ explicacoes = {
     'horse_race' : 'teste4 oioi',
     'poker' : 'teste5 XXX teste1 teste3 teste4 testXXX teste1 teste3 teste4 testXXX\n teste1 teste3 teste4 testXXX teste1 teste3 teste4 testXXX teste1\n teste3 teste4 testXXX teste1 teste3 teste4 testXXX teste1 teste3 teste4 testXXX teste1 teste3 teste4 test',
 }
+
+nomes_config = {
+    'tam_tela' : 'Tamanho da Tela',
+    'vsync' : 'VSync',
+    'vol_musica' : 'Volume da música',
+}
