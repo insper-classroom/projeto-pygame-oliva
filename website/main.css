@@ -119,6 +119,67 @@ footer p {
 
 /* ------------------------------------------------------------------------------- */
 
+.content {
+    display: flex;
+    flex-direction: row;
+    color: ghostwhite;
+    padding: 20px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.container {
+    background-color: black;
+    height: 100%;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: center;
+    color: ghostwhite;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.txt-img {
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    width: 20%;
+    margin: 3%;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.txt-img a {
+    height: 100%;
+}
+
+.txt-img a:hover {
+    opacity: 80%;
+}
+
+.txt-img h1 {
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.txt-img img {
+    border-style: solid;
+    border-color: black;
+    height: 40%;
+    display: block;
+    margin: 2%;
+    margin-bottom: 5%;
+    width: 100%;
+}
+
+.txt-img p{
+    margin: 5%;
+}
+
+/* ------------------------------------------------------------------------------- */
+
 #jogo {
     padding-top: 17vh;
     padding-left: 20px;
@@ -133,6 +194,22 @@ footer p {
 #jogo h1 {
     color: ghostwhite;
     font-size: 40px;
+}
+
+#jogo .content img{
+    width: 130%;
+    height: 130%;
+    margin: 3vh 5vh;
+}
+
+#jogo p{
+    font-size: 15px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 5%;
+    padding-right: 10%;
+    color: ghostwhite;
+    float: left;
 }
 
 /* ------------------------------------------------------------------------------- */
