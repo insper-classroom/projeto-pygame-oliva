@@ -10,8 +10,8 @@ traducao = {
 
 explicacoes = {
     'blackjack' : 'teste1 teste3 teste4 teste5 teste6 teste1 teste1 teste1 teste1 teste1 teste1 teste1 teste1 XXX teste1 teste3 teste4 test vrjbvsjofeaofos e1 teste1 teste1 teste1 teste1 teste1 teste1 XXX',
-    'roleta' : 'teste1 teste3 teste4 teste5 teste6 teste1 teste1 teste1 teste1 teste1 teste1 teste1 teste1.',
-    'slot_machine' : 'teste1 teste3 teste4 teste5 teste6 teste1 teste1 teste1 teste1 teste1 teste1 teste1 teste1.',
+    'roleta' : 'MEU NOME É HENRIQUE BUCCI RODRIGUES NETTO NAVOINEIOVN DNAIPENCIPE NCIQPENVIEP FINEIV  NEINIEFE    FIENFIEN',
+    'slot_machine' : 'teste1 teste3 teste4 teste5 teste6 teste1 teste1 teste1XXX teste1 teste3 teste4 test              teste1 teste1 teste1 teste1 teste1.',
     'horse_race' : 'teste4 oioi',
-    'poker' : 'teste5',
+    'poker' : 'teste5 XXX teste1 teste3 teste4 testXXX teste1 teste3 teste4 testXXX\n teste1 teste3 teste4 testXXX teste1 teste3 teste4 testXXX teste1\n teste3 teste4 testXXX teste1 teste3 teste4 testXXX teste1 teste3 teste4 testXXX teste1 teste3 teste4 test',
 }
