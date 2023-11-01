@@ -40,7 +40,7 @@ class ComoJogar:
         tam_linha = 0
 
         for i in range(len(words)):
-            if tam_linha > max_width or words[i][-1] == '\n':
+            if tam_linha > max_width or words[i][-1:] == '\n':
                 linhas += [' '.join(linha[:-1])]
                 linha = [linha[-1]]
                 tam_linha = fonte.render(linha[-1], True, (255, 255, 255)).get_width()
