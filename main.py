@@ -2,6 +2,7 @@ import pygame
 import os
 from telas.tela_main import Cassino
 from telas.tela_menu import Menu
+from telas.tela_como_jogar import ComoJogar
 from telas.tela_config import Config
 from minigames.blackjack import Blackjack
 from minigames.roleta import Roleta
@@ -23,6 +24,8 @@ def inicializa():
         'objs' : {},
         'personagens' : {},
     }
+
+    asset['como_jogar'] = ComoJogar(asset)
 
     window = pygame.display.set_mode(tuple(asset['tam_tela']), vsync=asset['vsync'], flags=pygame.SCALED)
     pygame.display.set_caption('Cassino')
@@ -65,6 +68,8 @@ def atualiza_estado(window, asset, state):
         return Menu().interacoes(state)
     elif state['tela_jogo'] == 'config':
         return Config().interacoes(window, asset, state)
+    elif state['tela_jogo'] == 'como_jogar':
+        return asset['como_jogar'].interacoes(window, asset, state)
     elif state['tela_jogo'] == 'blackjack':
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
@@ -95,6 +100,8 @@ def game_loop(window, asset, state):
             Menu().desenha(window, asset)
         elif state['tela_jogo'] == 'config':
                 Config().desenha(window)
+        elif state['tela_jogo'] == 'como_jogar':
+                asset['como_jogar'].desenha(window)
         elif state['tela_jogo'] == 'blackjack':
             if not blackjack_started:
                 blackjack = Blackjack(window)
