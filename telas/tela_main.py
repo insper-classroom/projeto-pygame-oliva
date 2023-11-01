@@ -126,7 +126,7 @@ class Cassino():
 
         if state['aviso'] != None:
             pygame.draw.rect(window, (255,255,255), pygame.Rect(450, 630, 380, 90))
-            window.blit(asset['def_font'].render(f'Você deseja jogar {state["aviso"]}?', True, (0, 0, 0)), (460,640))
+            window.blit(asset['def_font'].render(f'Você deseja jogar {traducao[state["aviso"]]}?', True, (0, 0, 0)), (460,640))
             window.blit(asset['leg_font'].render(f'Pressione \"e\" para iniciar o jogo.', True, (0, 0, 0)), (460,700))
             
         return
