@@ -50,7 +50,6 @@ class ComoJogar:
                 continue
             
             if tam_linha > max_width:
-                print('entrou')
                 linhas += [' '.join(linha[:-1])]
                 linha = [linha[-1]]
                 tam_linha = fonte.render(linha[-1], True, (255, 255, 255)).get_width()
