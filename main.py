@@ -15,8 +15,9 @@ def inicializa():
 
     pygame.init()
 
+    config = Config()
     asset = {
-        **Config().asset,
+        **config.asset,
         'def_font' : pygame.font.Font(pygame.font.get_default_font(), 15),
         'leg_font' : pygame.font.Font(pygame.font.get_default_font(), 11),
         'money_font' : pygame.font.Font(pygame.font.match_font('Abel'), 30),
@@ -25,6 +26,7 @@ def inicializa():
         'personagens' : {},
     }
 
+    asset['config'] = config
     asset['como_jogar'] = ComoJogar(asset)
 
     window = pygame.display.set_mode(tuple(asset['tam_tela']), vsync=asset['vsync'], flags=pygame.SCALED)
@@ -67,7 +69,7 @@ def atualiza_estado(window, asset, state):
     elif state['tela_jogo'] == 'menu':
         return Menu().interacoes(state)
     elif state['tela_jogo'] == 'config':
-        return Config().interacoes(window, asset, state)
+        return asset['config'].interacoes(window, asset, state)
     elif state['tela_jogo'] == 'como_jogar':
         return asset['como_jogar'].interacoes(window, asset, state)
     elif state['tela_jogo'] == 'blackjack':
@@ -99,7 +101,7 @@ def game_loop(window, asset, state):
         elif state['tela_jogo'] ==  'menu':
             Menu().desenha(window, asset)
         elif state['tela_jogo'] == 'config':
-                Config().desenha(window)
+                asset['config'].desenha(window, asset)
         elif state['tela_jogo'] == 'como_jogar':
                 asset['como_jogar'].desenha(window)
         elif state['tela_jogo'] == 'blackjack':
