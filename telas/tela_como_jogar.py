@@ -34,13 +34,23 @@ class ComoJogar:
     def divide_texto(self, key, fonte):
         words = self.textos[key].split(' ')
         space = fonte.size(' ')[0]
-        max_width = self.tela.width
-        linhas = []
-        linha = []
+        max_width = self.tela.width - 30
+        linha, linhas = [], []
         tam_linha = 0
 
         for i in range(len(words)):
-            if tam_linha > max_width or words[i][-1:] == '\n':
+            if '\n' in words[i]:
+                sp = words[i].split('\n')
+                if words[i] in linha:
+                    linhas += [' '.join(linha[:-1] + [sp[0]])]
+                else:
+                    linhas += [' '.join(linha + [sp[0]])]
+                linha = [sp[1]]
+                tam_linha = fonte.render(sp[1], True, (255, 255, 255)).get_width()
+                continue
+            
+            if tam_linha > max_width:
+                print('entrou')
                 linhas += [' '.join(linha[:-1])]
                 linha = [linha[-1]]
                 tam_linha = fonte.render(linha[-1], True, (255, 255, 255)).get_width()
