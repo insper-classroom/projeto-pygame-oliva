@@ -23,3 +23,5 @@ nomes_config = {
     'salvar' : 'Salvar',
     'cancelar' : 'Cancelar',
 }
+
+tamanhos_tela = [[1280, 720], [1440, 810]]
