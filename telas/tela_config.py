@@ -1,16 +1,16 @@
 import pygame
 from telas.tela_menu import *
-from const import nomes_config
+from const import nomes_config, tamanhos_tela
 
 class Config:
     def __init__(self):
         self.asset = {
-            'tam_tela' : [1280, 720],
+            'tam_tela' : tamanhos_tela[0],
             'vsync' : True,
             'vol_musica' : 100,
         }
 
-        self.mudou_tam = False
+        self.mudou_tam = [False, tamanhos_tela[0]]
 
         self.buttons = [*[pygame.Rect(2*self.asset['tam_tela'][0]/3 - 120, i*self.asset['tam_tela'][1]/12 + 60 + self.asset['tam_tela'][1]/6, 240, 30) for i in range(len(self.asset.keys()))],
                         pygame.Rect(self.asset['tam_tela'][0]/2 - 210, 5*self.asset['tam_tela'][1]/6 - 80, 180, 30),
@@ -27,7 +27,7 @@ class Config:
                 for key, button in buttons.items():
                     if button.collidepoint(pygame.mouse.get_pos()):
                         if key == 'tam_tela':
-                            self.mudou_tam = True
+                            self.mudou_tam = [True, tamanhos_tela[0] if self.mudou_tam[1] == tamanhos_tela[1] else tamanhos_tela[1]]
                         if key == 'vsync':
                             if asset[key] == False:
                                 asset[key] = True
@@ -39,13 +39,13 @@ class Config:
                             else:
                                 asset[key] = 100
                         if key == 'salvar':
-                            if self.mudou_tam == True or self.asset['vsync'] != asset['vsync']:
-                                if self.mudou_tam:
-                                    if asset['tam_tela'] == [1280, 720]:
-                                        asset['tam_tela'] = [1060, 600]
+                            if self.mudou_tam[0] == True or self.asset['vsync'] != asset['vsync']:
+                                if self.mudou_tam[0]:
+                                    if asset['tam_tela'] == tamanhos_tela[0]:
+                                        asset['tam_tela'] = tamanhos_tela[1]
                                     else:
-                                        asset['tam_tela'] = [1280, 720]
-                                    self.mudou_tam = False
+                                        asset['tam_tela'] = tamanhos_tela[0]
+                                    self.mudou_tam[0] = False
                                 window = pygame.display.set_mode(tuple(asset['tam_tela']), vsync=asset['vsync'], flags=pygame.SCALED)
 
                             self.asset.update({k: asset[k] for k in self.asset.keys()})
@@ -53,6 +53,7 @@ class Config:
                             state['tela_jogo'] = 'menu'
                         if key == 'cancelar':
                             asset.update(self.asset)
+                            self.mudou_tam = [False, tamanhos_tela[0] if self.asset['tam_tela'] == tamanhos_tela[0] else tamanhos_tela[1]]
                             asset['mapa'].desenha(window, asset, state)
                             state['tela_jogo'] = 'menu'
                             
@@ -70,7 +71,10 @@ class Config:
                 pygame.draw.rect(window, (60,60,60), buttons[i]) #botões
                 key = fonte.render(nomes_config[keys_added[i]], True, (255, 255, 255)) #nome da config
                 window.blit(key, (self.asset['tam_tela'][0]/3 - 120, buttons[i].y + buttons[i].height/2 - key.get_height()/2)) #desenha nome da config
-                val = fonte.render(str(asset[keys_added[i]]), True, (255, 255, 255)) #valor da config
+                if keys_added[i] != 'tam_tela':
+                    val = fonte.render(str(asset[keys_added[i]]), True, (255, 255, 255)) #valor da config
+                else:
+                    val = fonte.render(str(self.mudou_tam[1]), True, (255, 255, 255)) #valor da config
                 window.blit(val, (buttons[i].x + buttons[i].width/2 - val.get_width()/2, buttons[i].y + buttons[i].height/2 - val.get_height()/2)) #desenha valor da config
 
                 window.blit(fonte.render('>', True, (255, 255, 255)), (buttons[i].x + buttons[i].width - 20, buttons[i].y + buttons[i].height/2 - 7))
