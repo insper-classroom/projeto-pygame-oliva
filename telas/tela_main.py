@@ -4,7 +4,7 @@ from const import *
 class Cassino():
     """Inicializa classe do mapa do Cassino"""
     def __init__(self, asset):
-        self.mapa = pygame.transform.scale(pygame.image.load('images/mapa.jpg'), (1280,720))
+        self.mapa = pygame.transform.scale(pygame.image.load('images/mapa.png'), (1280,720))
         self.objs = {}
 
         #(top, bottom, left, right)
