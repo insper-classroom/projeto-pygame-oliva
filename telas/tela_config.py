@@ -7,7 +7,7 @@ class Config:
         self.asset = {
             'tam_tela' : tamanhos_tela[0],
             'vsync' : True,
-            'vol_musica' : 100,
+            'vol_musica' : 1,
         }
 
         self.mudou_tam = [False, tamanhos_tela[0]]
@@ -34,10 +34,10 @@ class Config:
                             else:
                                 asset[key] = False
                         if key == 'vol_musica':
-                            if asset[key] >= 5:
-                                asset[key] -= 5
+                            if asset[key] >= 0.05:
+                                asset[key] -= 0.05
                             else:
-                                asset[key] = 100
+                                asset[key] = 1
                         if key == 'salvar':
                             if self.mudou_tam[0] == True or self.asset['vsync'] != asset['vsync']:
                                 if self.mudou_tam[0]:
@@ -72,7 +72,11 @@ class Config:
                 key = fonte.render(nomes_config[keys_added[i]], True, (255, 255, 255)) #nome da config
                 window.blit(key, (self.asset['tam_tela'][0]/3 - 120, buttons[i].y + buttons[i].height/2 - key.get_height()/2)) #desenha nome da config
                 if keys_added[i] != 'tam_tela':
-                    val = fonte.render(str(asset[keys_added[i]]), True, (255, 255, 255)) #valor da config
+                    if keys_added[i] == 'vol_musica':
+                        x = round(asset[keys_added[i]]*100)
+                    else:
+                        x = asset[keys_added[i]]
+                    val = fonte.render(str(x), True, (255, 255, 255)) #valor da config
                 else:
                     val = fonte.render(str(self.mudou_tam[1]), True, (255, 255, 255)) #valor da config
                 window.blit(val, (buttons[i].x + buttons[i].width/2 - val.get_width()/2, buttons[i].y + buttons[i].height/2 - val.get_height()/2)) #desenha valor da config
