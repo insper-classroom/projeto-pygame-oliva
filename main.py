@@ -4,8 +4,10 @@ from telas.tela_main import Cassino
 from telas.tela_menu import Menu
 from telas.tela_como_jogar import ComoJogar
 from telas.tela_config import Config
+from telas.tela_inicio import Inicio
 from minigames.blackjack import Blackjack
 from minigames.roleta import Roleta
+from minigames.hourserace import HorseRace
 from player import Player
 
 def inicializa():
@@ -16,6 +18,7 @@ def inicializa():
     pygame.init()
 
     config = Config()
+
     asset = {
         **config.asset,
         'def_font' : pygame.font.Font(pygame.font.get_default_font(), 15),
@@ -26,17 +29,26 @@ def inicializa():
         'personagens' : {},
     }
 
+    #Inicializa objeto das Configurações
     asset['config'] = config
+
+    #Inicializa objeto da Tela de Como Jogar
     asset['como_jogar'] = ComoJogar(asset)
 
     window = pygame.display.set_mode(tuple(asset['tam_tela']), vsync=asset['vsync'], flags=pygame.SCALED)
     pygame.display.set_caption('Cassino')
 
+    #Inicializa objeto da Tela de Início
+    asset['inicio'] = Inicio(window, asset)
+
+    #Pega imagens da pasta de Objetos
     for img in os.listdir('images/objs'):
         asset['objs'][img[:-4]] = pygame.image.load(f'images/objs/{img}')
     
+    #Inicializa objeto Cassino
     asset['mapa'] = Cassino(asset)
 
+    #Pega imagens da pasta de Personagens
     for img in os.listdir('images/personagens'):
         if img.startswith('jogador'):
             asset[img[:-4]] = Player(pygame.image.load(f'images/personagens/{img}'), [5, 300], (60,60))
@@ -44,7 +56,7 @@ def inicializa():
             asset['personagens'][img[:-4]] = pygame.transform.scale(pygame.image.load(f'images/personagens/{img}'), (60,60))
 
     state = {
-        'tela_jogo' : 'main',
+        'tela_jogo' : 'inicio',
         'aviso' : None,
         'jogador' : asset['jogador'].pos,
         'vel' : [0,0],
@@ -64,18 +76,23 @@ def atualiza_estado(window, asset, state):
     state['dt'] = (t_atual - state['last_updated'])/1000
     state['last_updated'] = t_atual
 
-    if state['tela_jogo'] == 'main':
+    if state['tela_jogo'] == 'inicio': #Tela inicial
+        return asset['inicio'].interacoes(state)
+    elif state['tela_jogo'] == 'main': #Tela principal (Cassino)
         return asset['mapa'].interacoes(asset, state)
-    elif state['tela_jogo'] == 'menu':
+    elif state['tela_jogo'] == 'menu': #Tela Menu
         return Menu().interacoes(state)
-    elif state['tela_jogo'] == 'config':
+    elif state['tela_jogo'] == 'config': #Tela Configurações
         return asset['config'].interacoes(window, asset, state)
-    elif state['tela_jogo'] == 'como_jogar':
+    elif state['tela_jogo'] == 'como_jogar': #Tela Como Jogar
         return asset['como_jogar'].interacoes(window, asset, state)
-    elif state['tela_jogo'] == 'blackjack':
+    elif state['tela_jogo'] == 'blackjack': #Tela BlackJack
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
-    elif state['tela_jogo'] == 'roleta':
+    elif state['tela_jogo'] == 'roleta': #Tela Roleta
+        if not state['minigame'].interacoes():
+            state['tela_jogo'] = 'main'
+    elif state['tela_jogo'] == 'horse_race': #Tela Corrida de Cavalo
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
         
@@ -98,6 +115,8 @@ def game_loop(window, asset, state):
             asset['mapa'].desenha(window, asset, state)
             blackjack_started = False
             roleta_started = False
+        elif state['tela_jogo'] == 'inicio':
+            asset['inicio'].desenha(window, asset)
         elif state['tela_jogo'] ==  'menu':
             Menu().desenha(window, asset)
         elif state['tela_jogo'] == 'config':
@@ -130,10 +149,10 @@ def game_loop(window, asset, state):
                     state['dinheiro'] += roleta.money
                     roleta.money = 0
                     roleta.giveMoney = True
-        if state['dinheiro'] >= 0:
-            window.blit(asset['money_font'].render(f'Balance: ${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
-        else:
-            window.blit(asset['money_font'].render(f'Balance: ${state["dinheiro"]}', True, (255, 0, 0)), (10,10))
+        if state['dinheiro'] >= 0 and state['tela_jogo'] != 'inicio':
+            window.blit(asset['money_font'].render(f'Saldo: R${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
+        elif state['dinheiro'] < 0 and state['tela_jogo'] != 'inicio':
+            window.blit(asset['money_font'].render(f'Saldo: R${state["dinheiro"]}', True, (255, 0, 0)), (10,10))
         pygame.display.update()
 
 if __name__ == '__main__':
