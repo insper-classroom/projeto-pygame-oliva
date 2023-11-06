@@ -76,6 +76,11 @@ def atualiza_estado(window, asset, state):
     state['dt'] = (t_atual - state['last_updated'])/1000
     state['last_updated'] = t_atual
 
+    pygame.mixer.music.set_volume(asset['vol_musica'])
+    if not pygame.mixer.music.get_busy():
+        pygame.mixer.music.load('musica/jazz_fundo.mp3')
+        pygame.mixer.music.play()
+    
     if state['tela_jogo'] == 'inicio': #Tela inicial
         return asset['inicio'].interacoes(state)
     elif state['tela_jogo'] == 'main': #Tela principal (Cassino)
@@ -92,9 +97,12 @@ def atualiza_estado(window, asset, state):
     elif state['tela_jogo'] == 'roleta': #Tela Roleta
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
-    elif state['tela_jogo'] == 'horse_race': #Tela Corrida de Cavalo
-        if not state['minigame'].interacoes():
-            state['tela_jogo'] = 'main'
+    elif state['tela_jogo'] == 'horse_race': #Tela Corrida de Cavalo (NÃO IMPLEMENTADO)
+        return asset['mapa'].interacoes(asset, state)
+    elif state['tela_jogo'] == 'poker': #Tela Poker (NÃO IMPLEMENTADO)
+        return asset['mapa'].interacoes(asset, state)
+    elif state['tela_jogo'] == 'slot_machine': #Tela Caça Níquel (NÃO IMPLEMENTADO)
+        return asset['mapa'].interacoes(asset, state)
         
     return True
 
@@ -111,12 +119,12 @@ def game_loop(window, asset, state):
         game = atualiza_estado(window, asset, state)
         if game == False:
             return
-        if state['tela_jogo'] == 'main':
+        if state['tela_jogo'] == 'inicio':
+            asset['inicio'].desenha(window, asset)
+        elif state['tela_jogo'] == 'main':
             asset['mapa'].desenha(window, asset, state)
             blackjack_started = False
             roleta_started = False
-        elif state['tela_jogo'] == 'inicio':
-            asset['inicio'].desenha(window, asset)
         elif state['tela_jogo'] ==  'menu':
             Menu().desenha(window, asset)
         elif state['tela_jogo'] == 'config':
@@ -149,6 +157,13 @@ def game_loop(window, asset, state):
                     state['dinheiro'] += roleta.money
                     roleta.money = 0
                     roleta.giveMoney = True
+        elif state['tela_jogo'] == 'horse_race': #(NÃO IMPLEMENTADO)
+            asset['mapa'].desenha(window, asset, state)
+        elif state['tela_jogo'] == 'poker': #(NÃO IMPLEMENTADO)
+            asset['mapa'].desenha(window, asset, state)
+        elif state['tela_jogo'] == 'slot_machine': #(NÃO IMPLEMENTADO)
+            asset['mapa'].desenha(window, asset, state)
+
         if state['dinheiro'] >= 0 and state['tela_jogo'] != 'inicio':
             window.blit(asset['money_font'].render(f'Saldo: R${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
         elif state['dinheiro'] < 0 and state['tela_jogo'] != 'inicio':
