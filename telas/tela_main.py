@@ -127,7 +127,8 @@ class Cassino():
         window.blit(asset['jogador'].img, (state['jogador']))
 
         if asset['inicio'].prize_win:
-            txt = asset['def_font'].render('Você ganhou um bônus de R$2000!', True, (255,255,255))
+            t = f'Você ganhou um bônus de R${int(state["dinheiro"]/2)}!'
+            txt = asset['def_font'].render(t, True, (255,255,255))
             pygame.draw.rect(window, (0,0,0), pygame.Rect(asset['tam_tela'][0]/2 - txt.get_width()/2 - 5, asset['tam_tela'][1]/2 + 17, txt.get_width() + 10, txt.get_height() + 3))
             window.blit(txt, (asset['tam_tela'][0]/2 - txt.get_width()/2, asset['tam_tela'][1]/2 + 20))
             if pygame.time.get_ticks() - self.time >= 4000:
