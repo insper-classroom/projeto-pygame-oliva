@@ -5,7 +5,7 @@ class Inicio:
     def __init__(self, window, asset):
         self.circles = [pygame.draw.circle(window, (0,0,0), (asset['tam_tela'][0]/2 + 15, asset['tam_tela'][1]/2 - 150), 15)]
         self.musica = 'musica/jazz_fundo.mp3'
-        self.win = 'musica/prize_win.wav'
+        self.mus_win = 'musica/prize_win.wav'
         self.img = pygame.transform.scale(pygame.image.load('images/logo.png'), asset['tam_tela'])
         self.prize_win = False
     
@@ -19,11 +19,9 @@ class Inicio:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for circ in self.circles:
                     if circ.collidepoint(pygame.mouse.get_pos()):
-                        pygame.mixer.music.load(self.win)
+                        pygame.mixer.music.load(self.mus_win)
                         pygame.mixer.music.play()
-                        print(self.prize_win)
                         self.prize_win = True
-                        print(self.prize_win)
                         state['dinheiro'] *= 2
                         state['tela_jogo'] = 'main'
         
