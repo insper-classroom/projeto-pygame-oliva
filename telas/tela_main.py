@@ -32,7 +32,9 @@ class Cassino():
                              pygame.Rect(820 + 160*i, 480 + 65*i, 1, 90), #roleta left
                              pygame.Rect(910 + 160*i, 480 + 65*i, 1, 90) #roleta right
                              ]
-    
+
+            self.time = pygame.time.get_ticks()
+
     def rects(self):
         """Cria e pega Rect de todos os objetos no mapa"""
         pos = {}
@@ -123,6 +125,13 @@ class Cassino():
                     window.blit(asset['old_font'].render('Horse Race', True, (0, 0, 0)), (pos.x + 45, pos.y + 27))
         
         window.blit(asset['jogador'].img, (state['jogador']))
+
+        if asset['inicio'].prize_win:
+            txt = asset['def_font'].render('Você ganhou um bônus de R$2000!', True, (255,255,255))
+            pygame.draw.rect(window, (0,0,0), pygame.Rect(asset['tam_tela'][0]/2 - txt.get_width()/2 - 5, asset['tam_tela'][1]/2 + 17, txt.get_width() + 10, txt.get_height() + 3))
+            window.blit(txt, (asset['tam_tela'][0]/2 - txt.get_width()/2, asset['tam_tela'][1]/2 + 20))
+            if pygame.time.get_ticks() - self.time >= 4000:
+                asset['inicio'].prize_win = False
 
         if state['aviso'] != None:
             pygame.draw.rect(window, (255,255,255), pygame.Rect(450, 630, 380, 90))
