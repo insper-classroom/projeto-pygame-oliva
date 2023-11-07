@@ -38,9 +38,7 @@ def inicializa():
 
     window = pygame.display.set_mode(tuple(asset['tam_tela']), vsync=asset['vsync'], flags=pygame.SCALED)
     pygame.display.set_caption('Cassino')
-
-    #Inicializa objeto da Tela de Início
-    asset['inicio'] = Inicio(window, asset)
+    
 
     #Pega imagens da pasta de Objetos
     for img in os.listdir('images/objs'):
@@ -56,6 +54,9 @@ def inicializa():
     
     #Inicializa objeto Cassino
     asset['mapa'] = Cassino(asset)
+
+    #Inicializa objeto da Tela de Início
+    asset['inicio'] = Inicio(window, asset)
 
     state = {
         'tela_jogo' : 'inicio',

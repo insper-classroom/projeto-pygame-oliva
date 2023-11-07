@@ -35,7 +35,7 @@ class Cassino():
                              pygame.Rect(910 + 160*i, 480 + 65*i, 1, 90) #roleta right
                              ]
 
-            self.time = pygame.time.get_ticks()
+            self.time = 0
 
     def rects(self):
         """Cria e pega Rect de todos os objetos no mapa"""
@@ -135,7 +135,7 @@ class Cassino():
             txt = asset['def_font'].render(t, True, (255,255,255))
             pygame.draw.rect(window, (0,0,0), pygame.Rect(asset['tam_tela'][0]/2 - txt.get_width()/2 - 5, asset['tam_tela'][1]/2 + 17, txt.get_width() + 10, txt.get_height() + 3))
             window.blit(txt, (asset['tam_tela'][0]/2 - txt.get_width()/2, asset['tam_tela'][1]/2 + 20))
-            if pygame.time.get_ticks() - self.time >= 4000:
+            if pygame.time.get_ticks() - self.time >= 5000:
                 asset['inicio'].prize_win = False
 
         if state['aviso'] != None:

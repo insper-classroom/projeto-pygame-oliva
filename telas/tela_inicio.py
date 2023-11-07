@@ -21,6 +21,7 @@ class Inicio:
                     if circ.collidepoint(pygame.mouse.get_pos()):
                         pygame.mixer.music.fadeout(2)
                         self.mus_win.play()
+                        asset['mapa'].time = pygame.time.get_ticks()
                         self.prize_win = True
                         state['dinheiro'] *= 2
                         state['tela_jogo'] = 'main'
