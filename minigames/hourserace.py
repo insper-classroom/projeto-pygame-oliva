@@ -16,16 +16,40 @@ class Horse():
     def movimenta(self, delta):
         self.x += self.speed * delta
 
+class BetButton():
+    def __init__(self, window, x, y, index):
+        self.window = window
+        self.button = pygame.rect.Rect(x - 30, y, 120, 30)
+        self.x = x
+        self.y = y
+        self.index = index
+
+    def desenha(self):
+        pygame.draw.rect(self.window, (255, 255, 255), self.button)
+        font = pygame.font.Font(pygame.font.get_default_font(), 20)
+        text_surface = font.render(f'Cavalo {self.index}', True, (0, 0, 0))
+        x = self.x + (self.button.width // 2) - (text_surface.get_width() // 2) - 30
+        y = self.y + (self.button.height // 2) - (text_surface.get_height() // 2)
+        self.window.blit(text_surface, (x, y))
+
 class HorseRace():
     def __init__(self, window):
-        self.isInBetMenu = False
+        self.isInBetMenu = True
         self.window = window
-        self.horses = [Horse(self.window, 100, i * 100, randint(100, 120), i) for i in range(1, 5)]
+        self.horses = [Horse(self.window, 100, i * 100, randint(100, 120), i) for i in range(1, 3)]
+        self.horses2 = (Horse(self.window, 100, i * 100 + 125, randint(100, 120), i) for i in range(3, 5))
+        self.horses += self.horses2
         self.horseWinner = None
         self.lastTick = 0
         self.messageWinner = ''
-        self.bet = 1 
+        self.bet = 0
         self.font = pygame.font.Font(pygame.font.get_default_font(), 20)
+        self.horsesBets = [Horse(self.window, 250 * i, 330, 0, i) for i in range(1, 5)]
+        self.betsButton = [BetButton(self.window, 250 * i, 400, i) for i in range(1, 5)]
+        self.playButton = pygame.rect.Rect((1280 // 2) - 60, 720 // 1.25, 120, 30)
+        self.background = pygame.transform.scale(pygame.image.load('images/horserace.png'), (1280,720))
+        self.resetButton = pygame.rect.Rect((1280 // 2) - 60, 720 // 2 + 25, 120, 60)
+        self.giveMoney = False
 
     def desenha(self):
         window.fill((0,0,0))
@@ -33,20 +57,63 @@ class HorseRace():
         delta = (tick - self.lastTick) / 1000
         self.lastTick = tick
         if not self.isInBetMenu:
-            text_surface = self.font.render(self.messageWinner, True, (255, 255, 255))
+            self.window.blit(self.background, (0,0))
+            font = pygame.font.Font(pygame.font.get_default_font(), 36)
+            text_surface = font.render(self.messageWinner, True, (255, 255, 255))
             x =  (1280 // 2) - (text_surface.get_width() // 2)
-            y = (720 // 2) - (text_surface.get_height() // 2)
+            y = (720 // 2) - (text_surface.get_height() // 2) - 50
             self.window.blit(text_surface, (x, y))
             for horse in self.horses:
                 horse.desenha()
                 horse.movimenta(delta)
-                if horse.x >= 1280 - 60:
+                if horse.x >= 1200:
                     if self.messageWinner == '':
-                        self.messageWinner = f'O cavalo {horse.index} ganhou! Você ganhou R$ 100,00' if horse.index == self.bet else f'O cavalo {horse.index} ganhou! Você perdeu R$ 100,00'
-                    horse.x = 1280 - 60
+                        self.messageWinner = f'O cavalo {horse.index} ganhou! Você ganhou R$ 400,00' if horse.index == self.bet else f'O cavalo {horse.index} ganhou! Você perdeu R$ 100,00'
+                    horse.x = 1200
+            if self.messageWinner != '':
+                pygame.draw.rect(self.window, (0, 0, 0), self.resetButton)
+                text_surface = self.font.render(f'Reiniciar', True, (255, 255, 255))
+                x = (1280 // 2) - 60 + (self.resetButton.width // 2) - (text_surface.get_width() // 2)
+                y = 720 // 2 + 25 + (self.resetButton.height // 2) - (text_surface.get_height() // 2)
+                self.window.blit(text_surface, (x, y))
             if self.horses[0].x >= 600 and self.horseWinner == None:
                 self.horseWinner = randint(0, 4)
                 self.horses[self.horseWinner - 1].speed += (120 - self.horses[self.horseWinner - 1].speed) + 30
+        else:
+            for horse in self.horsesBets:
+                horse.desenha()
+            for button in self.betsButton:
+                button.desenha()
+                if button.index == self.bet:
+                    pygame.draw.circle(self.window, (0, 0, 0), (button.x - 30 + (button.button[2] // 2), button.y + (button.button[3] // 2)), 7)
+            font = pygame.font.Font(pygame.font.get_default_font(), 36)
+            text_surface = font.render(f'Seja bem vindo a corrida de cavalo', True, (255, 255, 255))
+            x =  (1280 // 2) - (text_surface.get_width() // 2)
+            y = (720 // 5) - (text_surface.get_height() // 2)
+            self.window.blit(text_surface, (x, y))
+            text_surface = self.font.render(f'Para apostar em um cavalo, clique no botão embaixo dele.', True, (255, 255, 255))
+            x =  (1280 // 2) - (text_surface.get_width() // 2)
+            y = (720 // 3.5) - (text_surface.get_height() // 2)
+            self.window.blit(text_surface, (x, y))
+            if self.bet != 0:
+                text_surface = self.font.render(f'Você está apostando no cavalo {self.bet}', True, (255, 255, 255))
+                x =  (1280 // 2) - (text_surface.get_width() // 2)
+                y = (720 // 1.35) - (text_surface.get_height() // 2)
+                self.window.blit(text_surface, (x, y))
+                pygame.draw.rect(self.window, (255, 255, 255), self.playButton)
+                text_surface = self.font.render(f'Jogar', True, (0, 0, 0))
+                x = (1280 // 2) - 60 + (self.playButton.width // 2) - (text_surface.get_width() // 2)
+                y = 720 // 1.25 + (self.playButton.height // 2) - (text_surface.get_height() // 2)
+                self.window.blit(text_surface, (x, y))
+
+    def resetGame(self):
+        self.isInBetMenu = True
+        self.horses = [Horse(self.window, 100, i * 100, randint(100, 120), i) for i in range(1, 3)]
+        self.horses2 = (Horse(self.window, 100, i * 100 + 125, randint(100, 120), i) for i in range(3, 5))
+        self.horses += self.horses2
+        self.horseWinner = None
+        self.messageWinner = ''
+        self.bet = 0
 
     def interacoes(self):
         """
@@ -55,6 +122,20 @@ class HorseRace():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if self.isInBetMenu:
+                    for button in self.betsButton:
+                        if button.button.collidepoint(event.pos):
+                            if self.bet == button.index:
+                                self.bet = 0
+                            else:
+                                self.bet = button.index
+                            break
+                    if self.playButton.collidepoint(event.pos):
+                        self.isInBetMenu = False
+                else:
+                    if self.resetButton.collidepoint(event.pos):
+                        self.resetGame()
         return True
 
 if __name__ == '__main__':
