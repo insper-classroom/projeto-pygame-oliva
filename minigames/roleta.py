@@ -229,6 +229,13 @@ class Roleta:
         roleta_rect = self.roleta.get_rect(center=(640, 250))
         self.window.blit(self.roleta, roleta_rect)
         time = pygame.time.get_ticks()
+        if self.resultMessage == '':
+            self.drawButtons()
+            for number in self.bets:
+                    for col in self.betsButtons:
+                        for button in col:
+                            if button.value == number:
+                                pygame.draw.circle(self.window, (255, 255, 255), (button.x + (button.rect[2] // 2), button.y + (button.rect[3] // 2)), 7)
         if not self.isPlaying:
             self.fechar.desenha(True)
             if (time - self.lastUptaded) / 1000 >= 0.01:
@@ -237,12 +244,8 @@ class Roleta:
                 if self.roletaAngle >= 360:
                     self.roletaAngle = 0
                 self.roleta = pygame.transform.rotate(self.originalImage, self.roletaAngle)
-            self.drawButtons()
-            for number in self.bets:
-                for col in self.betsButtons:
-                    for button in col:
-                        if button.value == number:
-                            pygame.draw.circle(self.window, (255, 255, 255), (button.x + (button.rect[2] // 2), button.y + (button.rect[3] // 2)), 7)
+            if len(self.bets) > 0:
+                self.jogar.desenha(False)
         else:
             if not self.sorted:
                 self.sorted = True
@@ -313,8 +316,6 @@ class Roleta:
         for col in self.betsButtons:
             for button in col:
                 button.desenha(True if button.value in self.blackNumbers else False)
-        if len(self.bets) > 0:
-            self.jogar.desenha(False)
 
     def interacoes(self):
         """
