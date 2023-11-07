@@ -13,6 +13,8 @@ class Cassino():
 
         for key, img in asset['objs'].items():
             self.objs[key] = pygame.transform.scale(img, img_sizes[key])
+        
+        self.objs['agiota'] = pygame.transform.scale(asset['personagens']['agiota'], (100,80))
 
         for i in range(3):
             self.paredes += [pygame.Rect(34 + 177*i, 589, 90, 1), #blackjack top
@@ -52,6 +54,8 @@ class Cassino():
         pos['horse_race'] = [pygame.Rect(*(970, 0), *(250,85))]
         pos['poker'] = [pygame.Rect(*(370, 210), *(290,150))]
 
+        pos['agiota'] = [pygame.Rect(*(320, 50), *(100,80))]
+
         return pos
     
     def interacoes(self, asset, state):
@@ -87,11 +91,11 @@ class Cassino():
         asset['jogador'].pos[1] = asset['jogador'].pos[1] + state['vel'][1] * state['dt']
 
         #Check if player is outside bounds in x-axis
-        if asset['jogador'].pos[0] < 0 or asset['jogador'].pos[0] + asset['jogador'].size[0] >= 1280:
+        if asset['jogador'].pos[0] < 0 or asset['jogador'].pos[0] + asset['jogador'].size[0] >= asset['tam_tela'][0]:
             asset['jogador'].pos[0] = asset['jogador'].pos[0] - state['vel'][0] * state['dt']
         
         #Check if player is outside bounds in y-axis
-        if asset['jogador'].pos[1] < 0 or asset['jogador'].pos[1] + asset['jogador'].size[1] >= 720:
+        if asset['jogador'].pos[1] < 0 or asset['jogador'].pos[1] + asset['jogador'].size[1] >= asset['tam_tela'][1]:
             asset['jogador'].pos[1] = asset['jogador'].pos[1] - state['vel'][1] * state['dt']
         
         #Check collisions with walls around objects
@@ -135,8 +139,11 @@ class Cassino():
                 asset['inicio'].prize_win = False
 
         if state['aviso'] != None:
-            pygame.draw.rect(window, (255,255,255), pygame.Rect(450, 630, 380, 90))
-            window.blit(asset['def_font'].render(f'Você deseja jogar {traducao[state["aviso"]]}?', True, (0, 0, 0)), (460,640))
-            window.blit(asset['leg_font'].render(f'Pressione \"e\" para iniciar o jogo.', True, (0, 0, 0)), (460,700))
+            pygame.draw.rect(window, (255,255,255), pygame.Rect(430, 630, 420, 90))
+            if state['aviso'] in ['blackjack', 'roleta', 'horse_race']:
+                window.blit(asset['def_font'].render(f'Você deseja jogar {traducao[state["aviso"]]}?', True, (0, 0, 0)), (440,640))
+                window.blit(asset['leg_font'].render(f'Pressione \"e\" para iniciar o jogo.', True, (0, 0, 0)), (440,700))
+            else:
+                window.blit(asset['def_font'].render(f'Em breve...', True, (0, 0, 0)), (440,640))
             
         return

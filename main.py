@@ -45,15 +45,16 @@ def inicializa():
     for img in os.listdir('images/objs'):
         asset['objs'][img[:-4]] = pygame.image.load(f'images/objs/{img}')
     
-    #Inicializa objeto Cassino
-    asset['mapa'] = Cassino(asset)
 
     #Pega imagens da pasta de Personagens
     for img in os.listdir('images/personagens'):
         if img.startswith('jogador'):
-            asset[img[:-4]] = Player(pygame.image.load(f'images/personagens/{img}'), [5, 300], (60,60))
+            asset[img[:-4]] = Player(pygame.image.load(f'images/personagens/{img}'), [5, 300], (50,50))
         else:
             asset['personagens'][img[:-4]] = pygame.transform.scale(pygame.image.load(f'images/personagens/{img}'), (60,60))
+    
+    #Inicializa objeto Cassino
+    asset['mapa'] = Cassino(asset)
 
     state = {
         'tela_jogo' : 'inicio',
@@ -79,10 +80,10 @@ def atualiza_estado(window, asset, state):
     pygame.mixer.music.set_volume(asset['vol_musica'])
     if not pygame.mixer.music.get_busy():
         pygame.mixer.music.load('musica/jazz_fundo.mp3')
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1, fade_ms=500)
     
     if state['tela_jogo'] == 'inicio': #Tela inicial
-        return asset['inicio'].interacoes(state)
+        return asset['inicio'].interacoes(asset, state)
     elif state['tela_jogo'] == 'main': #Tela principal (Cassino)
         return asset['mapa'].interacoes(asset, state)
     elif state['tela_jogo'] == 'menu': #Tela Menu
