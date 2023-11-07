@@ -20,6 +20,7 @@ nomes_config = {
     'tam_tela' : 'Tamanho da Tela',
     'vsync' : 'VSync',
     'vol_musica' : 'Volume da música',
+    'vol_sons' : 'Volume SFX',
     'salvar' : 'Salvar',
     'cancelar' : 'Cancelar',
 }
