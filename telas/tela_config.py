@@ -8,6 +8,7 @@ class Config:
             'tam_tela' : tamanhos_tela[0],
             'vsync' : True,
             'vol_musica' : 1,
+            'vol_sons' : 1,
         }
 
         self.mudou_tam = [False, tamanhos_tela[0]]
@@ -27,14 +28,15 @@ class Config:
                 for key, button in buttons.items():
                     if button.collidepoint(pygame.mouse.get_pos()):
                         if key == 'tam_tela':
-                            self.mudou_tam = [True, tamanhos_tela[0] if self.mudou_tam[1] == tamanhos_tela[1] else tamanhos_tela[1]]
+                            pass
+                            #self.mudou_tam = [True, tamanhos_tela[0] if self.mudou_tam[1] == tamanhos_tela[1] else tamanhos_tela[1]]
                         if key == 'vsync':
                             if asset[key] == False:
                                 asset[key] = True
                             else:
                                 asset[key] = False
-                        if key == 'vol_musica':
-                            if asset[key] >= 0.05:
+                        if key.startswith('vol'):
+                            if asset[key] > 0:
                                 asset[key] -= 0.05
                             else:
                                 asset[key] = 1
@@ -72,7 +74,7 @@ class Config:
                 key = fonte.render(nomes_config[keys_added[i]], True, (255, 255, 255)) #nome da config
                 window.blit(key, (self.asset['tam_tela'][0]/3 - 120, buttons[i].y + buttons[i].height/2 - key.get_height()/2)) #desenha nome da config
                 if keys_added[i] != 'tam_tela':
-                    if keys_added[i] == 'vol_musica':
+                    if keys_added[i].startswith('vol'):
                         x = round(asset[keys_added[i]]*100)
                     else:
                         x = asset[keys_added[i]]
