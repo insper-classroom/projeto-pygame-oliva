@@ -10,7 +10,7 @@ CARD_SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
 CARD_VALUES = list(range(1, 14))  # 1 para Ás, 11 para Valete, 12 para Rainha, 13 para Rei
 
 # Definindo a classe do jogo
-class CaribbeanPoker:
+class Poker:
     def __init__(self, window):
         self.window = window
         self.background_color = (0, 128, 0)
@@ -248,7 +248,7 @@ if __name__ == '__main__':
     screen_height = 720
     window = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption('Caribbean Poker')
-    game = CaribbeanPoker(window)
+    game = Poker(window)
     running = True
     game.deal_cards()
     while running:

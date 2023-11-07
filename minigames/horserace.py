@@ -50,9 +50,10 @@ class HorseRace():
         self.background = pygame.transform.scale(pygame.image.load('images/horserace.png'), (1280,720))
         self.resetButton = pygame.rect.Rect((1280 // 2) - 60, 720 // 2 + 25, 120, 60)
         self.giveMoney = False
+        self.money = 0
 
     def desenha(self):
-        window.fill((0,0,0))
+        self.window.fill((0,0,0))
         tick = pygame.time.get_ticks()
         delta = (tick - self.lastTick) / 1000
         self.lastTick = tick
@@ -68,6 +69,10 @@ class HorseRace():
                 horse.movimenta(delta)
                 if horse.x >= 1200:
                     if self.messageWinner == '':
+                        if horse.index == self.bet:
+                            self.money = 400
+                        else:
+                            self.money = -100
                         self.messageWinner = f'O cavalo {horse.index} ganhou! Você ganhou R$ 400,00' if horse.index == self.bet else f'O cavalo {horse.index} ganhou! Você perdeu R$ 100,00'
                     horse.x = 1200
             if self.messageWinner != '':
@@ -114,6 +119,8 @@ class HorseRace():
         self.horseWinner = None
         self.messageWinner = ''
         self.bet = 0
+        self.money = 0
+        self.giveMoney = False
 
     def interacoes(self):
         """

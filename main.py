@@ -7,7 +7,8 @@ from telas.tela_config import Config
 from telas.tela_inicio import Inicio
 from minigames.blackjack import Blackjack
 from minigames.roleta import Roleta
-from minigames.hourserace import HorseRace
+from minigames.horserace import HorseRace
+from minigames.poker import Poker
 from player import Player
 
 def inicializa():
@@ -98,10 +99,12 @@ def atualiza_estado(window, asset, state):
     elif state['tela_jogo'] == 'roleta': #Tela Roleta
         if not state['minigame'].interacoes():
             state['tela_jogo'] = 'main'
-    elif state['tela_jogo'] == 'horse_race': #Tela Corrida de Cavalo (NÃO IMPLEMENTADO)
-        return asset['mapa'].interacoes(asset, state)
-    elif state['tela_jogo'] == 'poker': #Tela Poker (NÃO IMPLEMENTADO)
-        return asset['mapa'].interacoes(asset, state)
+    elif state['tela_jogo'] == 'horse_race': #Tela Corrida de Cavalo
+        if not state['minigame'].interacoes():
+            state['tela_jogo'] = 'main'
+    elif state['tela_jogo'] == 'poker': #Tela Poker
+        if not state['minigame'].interacoes():
+            state['tela_jogo'] = 'main'
     elif state['tela_jogo'] == 'slot_machine': #Tela Caça Níquel (NÃO IMPLEMENTADO)
         return asset['mapa'].interacoes(asset, state)
         
@@ -116,6 +119,10 @@ def game_loop(window, asset, state):
     blackjack_started = False
     roleta = Roleta(window)
     roleta_started = False
+    horse_race = HorseRace(window)
+    horse_race_started = False
+    poker = Poker(window)
+    poker_started = False
     while game:
         game = atualiza_estado(window, asset, state)
         if game == False:
@@ -159,9 +166,29 @@ def game_loop(window, asset, state):
                     roleta.money = 0
                     roleta.giveMoney = True
         elif state['tela_jogo'] == 'horse_race': #(NÃO IMPLEMENTADO)
-            asset['mapa'].desenha(window, asset, state)
+            if not horse_race_started:
+                horse_race = HorseRace(window)
+                state['minigame'] = horse_race
+                horse_race_started = True
+            horse_race.desenha()
+            if horse_race.money != 0 and not horse_race.giveMoney:
+                horse_race.giveMoney = True
+                state['dinheiro'] += horse_race.money
         elif state['tela_jogo'] == 'poker': #(NÃO IMPLEMENTADO)
-            asset['mapa'].desenha(window, asset, state)
+            if not poker_started:
+                poker = Poker(window)
+                state['minigame'] = poker
+                poker_started = True
+                poker.deal_cards()
+            poker.desenha()
+            if poker.resultMessage != '' and not poker.giveMoney:
+                poker.giveMoney = True
+                if 'dealer' in poker.resultMessage:
+                    state['dinheiro'] -= poker.bet
+                elif 'desistiu' in poker.resultMessage:
+                    state['dinheiro'] -= poker.bet
+                elif 'Você' in poker.resultMessage:
+                    state['dinheiro'] += poker.bet
         elif state['tela_jogo'] == 'slot_machine': #(NÃO IMPLEMENTADO)
             asset['mapa'].desenha(window, asset, state)
 

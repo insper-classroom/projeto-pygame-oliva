@@ -140,7 +140,7 @@ class Cassino():
 
         if state['aviso'] != None:
             pygame.draw.rect(window, (255,255,255), pygame.Rect(430, 630, 420, 90))
-            if state['aviso'] in ['blackjack', 'roleta', 'horse_race']:
+            if state['aviso'] in ['blackjack', 'roleta', 'horse_race', 'poker']:
                 window.blit(asset['def_font'].render(f'Você deseja jogar {traducao[state["aviso"]]}?', True, (0, 0, 0)), (440,640))
                 window.blit(asset['leg_font'].render(f'Pressione \"e\" para iniciar o jogo.', True, (0, 0, 0)), (440,700))
             else:
