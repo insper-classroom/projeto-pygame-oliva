@@ -59,11 +59,15 @@ class HorseRace():
 
     def desenha(self):
         self.window.fill((0,0,0))
+        moneyRect = pygame.rect.Rect(0, 0, 175, 35)
+        pygame.draw.rect(self.window, (255, 255, 255), moneyRect)
         tick = pygame.time.get_ticks()
         delta = (tick - self.lastTick) / 1000
         self.lastTick = tick
         if not self.isInBetMenu:
             self.window.blit(self.background, (0, 0))
+            moneyRect = pygame.rect.Rect(0, 0, 175, 35)
+            pygame.draw.rect(self.window, (255, 255, 255), moneyRect)
             for horse in self.horses:
                 horse.desenha()
                 horse.movimenta(delta)
@@ -82,6 +86,8 @@ class HorseRace():
                     horse.x = 1200
             if self.showPodium:
                 self.window.fill((0,0,0))
+                moneyRect = pygame.rect.Rect(0, 0, 175, 35)
+                pygame.draw.rect(self.window, (255, 255, 255), moneyRect)
                 font = pygame.font.Font(pygame.font.get_default_font(), 36)
                 text_surface = font.render(self.messageWinner, True, (255, 255, 255))
                 x =  (1280 // 2) - (text_surface.get_width() // 2)
