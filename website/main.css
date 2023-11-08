@@ -29,7 +29,8 @@ body {
 /* ------------------------------------------------------------------------------- */
 
 p span {
-    color: rgb(205, 25, 25);
+    color: goldenrod;
+    font-weight: bold;
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -66,8 +67,8 @@ footer p {
 }
 
 .logo_container h1{
-    
-    color:rgb(55, 205, 55);
+    color: goldenrod;
+    /*color:rgb(205, 25, 25);*/
     height: fit-content;
     display: flex;
     font-size: 40px;
@@ -109,7 +110,7 @@ footer p {
     color: ghostwhite;
     display: table-cell;
     vertical-align: middle;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .navigation a li:hover {
@@ -183,16 +184,17 @@ footer p {
     flex-direction: row;
     color: ghostwhite;
     padding: 20px;
-    height: 80vh;
+    height: fit-content;
 }
 
 /* ------------------------------------------------------------------------------- */
 
 .container {
     height: 100%;
+    width: 100%;
     padding: 0px 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     color: ghostwhite;
 }
 
@@ -206,6 +208,7 @@ footer p {
     margin: 3%;
     align-items: center;
     margin-bottom: 20px;
+    height: fit-content;
 }
 
 .txt-img a {
@@ -219,8 +222,10 @@ footer p {
 .txt-img h1 {
     align-items: center;
     text-align: center;
-    font-size: 14px;
+    font-size: 20px;
     margin-bottom: 10px;
+    width: fit-content;
+    height: fit-content;
 }
 
 .txt-img img {
@@ -234,6 +239,7 @@ footer p {
 }
 
 .txt-img p{
+    font-size: 15px;
     margin: 5%;
 }
 
@@ -255,9 +261,10 @@ footer p {
 }
 
 #jogo .content img{
-    width: 100vh;
-    height: 50vh;
+    width: 100%;
+    height: 100%;
     margin: 3vh 5vh;
+    align-items: center;
 }
 
 #jogo .txt-img{
@@ -268,9 +275,12 @@ footer p {
     float: left;
 }
 
+#jogo .txt-img p span{
+    font-size: 18px;
+}
 /* ------------------------------------------------------------------------------- */
 
-#download {
+#desenvolvimento {
     padding-top: 17vh;
     padding-left: 20px;
     height: 80vh;
@@ -279,13 +289,13 @@ footer p {
     border-bottom-style: solid;
 }
 
-#download h1 {
+#desenvolvimento h1 {
     color: ghostwhite;
     font-size: 40px;
     text-align: center;
 }
 
-#download img {
+#desenvolvimento img {
     width: 20%;
     height: 55%;
 }
@@ -294,8 +304,7 @@ footer p {
 
 #como-jogar {
     padding-top: 17vh;
-    padding-left: 20px;
-    height: 80vh;
+    height: fit-content;
     width: 100%;
     border-bottom: 3px;
     border-bottom-style: solid;
@@ -307,12 +316,41 @@ footer p {
     text-align: center;
 }
 
+#como-jogar .container {
+    width: 100%;
+}
+
+#como-jogar .container p{
+    padding-top: 30px;
+    width: 70%;
+    text-align: justify;
+}
+
+#como-jogar .container p span {
+    color: goldenrod;
+    font-weight: bold;
+}
+
+#como-jogar .content {
+    flex-wrap: wrap; 
+    height: fit-content;   
+}
+
+#como-jogar .txt-img h1 {
+    font-size: 20px;
+}
+
+#como-jogar .txt-img img {
+    height: 150px;
+    width: 300px;
+}
+
 /* ------------------------------------------------------------------------------- */
 
 #sobre-nos {
     padding-top: 17vh;
-    padding-left: 20px;
-    height: 80vh;
+    padding-bottom: 2%;
+    height: fit-content;
     width: 100%;
     border-bottom: 3px;
     border-bottom-style: solid;
@@ -322,6 +360,29 @@ footer p {
     color: ghostwhite;
     font-size: 40px;
     text-align: center;
+}
+
+#sobre-nos .txt-img {
+    font-size: 20px;
+    margin: 0px;
+    padding: 30px;
+    padding-top: 30px;
+ }
+
+#sobre-nos .txt-img h1 {
+   font-size: 20px;
+   padding-top: 5px;
+}
+
+#sobre-nos .txt-img p {
+    padding-top: 5px;
+    text-align: justify;
+ }
+
+#sobre-nos .txt-img img {
+    border-radius: 3%;
+    height: 400px;
+    width: 350px;
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -362,6 +423,7 @@ footer p {
 
 #commits {
     width: 100%;
+    height: fit-content;
     margin-top: 3%;
     text-align: center;
 }
