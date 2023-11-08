@@ -138,6 +138,8 @@ def game_loop(window, asset, state):
             asset['mapa'].desenha(window, asset, state)
             blackjack_started = False
             roleta_started = False
+            horse_race_started = False
+            poker_started = False
         elif state['tela_jogo'] ==  'menu':
             Menu().desenha(window, asset)
         elif state['tela_jogo'] == 'config':
