@@ -24,7 +24,7 @@ class Menu:
                         elif key == 'Como Jogar':
                             state['tela_jogo'] = 'como_jogar'
                         elif key == 'Sobre Nós':
-                            webbrowser.open('https://henriquebrnetto.github.io/personal-website/index.html')
+                            webbrowser.open('https://insper-classroom.github.io/projeto-pygame-oliva/')
                             return True
 
         return True

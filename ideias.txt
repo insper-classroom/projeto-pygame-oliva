@@ -2,8 +2,8 @@
 
 poker
 blackjack
-sinuca (?)
-roleta (?)
+sinuca
+roleta
 jogo dos dados
 slot machine (?)
 corrida de cavalo
@@ -20,3 +20,23 @@ menu de configurações
 menu de instruções
 
 
+------- usabilidade -------
+
+- cavalos da mesma cor (ok)
+- pódio na corrida de cavalo (ok)
+- inserir sons (ok)
+- sem soma do blackjack (ok)
+- configuração de tela não funciona direito
+- paredes do bar (ok)
+- poder alterar o valor da apostas
+- não deixar apostar em todos os complementares (ex.: vermelho e preto) na roleta
+- tela de início (ok)
+- tela de game over (ok)
+- opção de aposta do 1 ao 18 ou 19 ao 36, e par ou ímpar
+
+------- a desenvolver ------
+
+- interacao com o coelho
+- caça níquel
+- incluir nomes diferentes para os cavalos
+- sinuca
