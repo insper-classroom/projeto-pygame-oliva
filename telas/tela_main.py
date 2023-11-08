@@ -14,7 +14,7 @@ class Cassino():
         for key, img in asset['objs'].items():
             self.objs[key] = pygame.transform.scale(img, img_sizes[key])
         
-        self.objs['agiota'] = pygame.transform.scale(asset['personagens']['agiota'], (100,80))
+        self.objs['agiota'] = pygame.transform.scale(asset['personagens']['agiota'], (90,90))
 
         for i in range(3):
             self.paredes += [pygame.Rect(34 + 177*i, 589, 90, 1), #blackjack top
@@ -54,7 +54,7 @@ class Cassino():
         pos['horse_race'] = [pygame.Rect(*(970, 0), *(250,85))]
         pos['poker'] = [pygame.Rect(*(370, 210), *(290,150))]
 
-        pos['agiota'] = [pygame.Rect(*(320, 50), *(100,80))]
+        pos['agiota'] = [pygame.Rect(*(360, 40), *(80,80))]
 
         return pos
     
@@ -135,7 +135,7 @@ class Cassino():
             txt = asset['def_font'].render(t, True, (255,255,255))
             pygame.draw.rect(window, (0,0,0), pygame.Rect(asset['tam_tela'][0]/2 - txt.get_width()/2 - 5, asset['tam_tela'][1]/2 + 17, txt.get_width() + 10, txt.get_height() + 3))
             window.blit(txt, (asset['tam_tela'][0]/2 - txt.get_width()/2, asset['tam_tela'][1]/2 + 20))
-            if pygame.time.get_ticks() - self.time >= 5000:
+            if pygame.time.get_ticks() - self.time >= 3000:
                 asset['inicio'].prize_win = False
 
         if state['aviso'] != None:
@@ -143,6 +143,8 @@ class Cassino():
             if state['aviso'] in ['blackjack', 'roleta', 'horse_race', 'poker']:
                 window.blit(asset['def_font'].render(f'Você deseja jogar {traducao[state["aviso"]]}?', True, (0, 0, 0)), (440,640))
                 window.blit(asset['leg_font'].render(f'Pressione \"e\" para iniciar o jogo.', True, (0, 0, 0)), (440,700))
+            elif state['aviso'] == 'agiota':
+                pass
             else:
                 window.blit(asset['def_font'].render(f'Em breve...', True, (0, 0, 0)), (440,640))
             
