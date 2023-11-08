@@ -5,6 +5,7 @@ from telas.tela_menu import Menu
 from telas.tela_como_jogar import ComoJogar
 from telas.tela_config import Config
 from telas.tela_inicio import Inicio
+from telas.tela_game_over import GameOver
 from minigames.blackjack import Blackjack
 from minigames.roleta import Roleta
 from minigames.horserace import HorseRace
@@ -75,9 +76,10 @@ def atualiza_estado(window, asset, state):
     """
     Atualiza estado do jogo, e checa ações e interações.
     """
-    t_atual = pygame.time.get_ticks()
-    state['dt'] = (t_atual - state['last_updated'])/1000
-    state['last_updated'] = t_atual
+    if state['tela_jogo'] != 'game_over':
+        t_atual = pygame.time.get_ticks()
+        state['dt'] = (t_atual - state['last_updated'])/1000
+        state['last_updated'] = t_atual
 
     pygame.mixer.music.set_volume(asset['vol_musica'])
     if not pygame.mixer.music.get_busy():
@@ -108,6 +110,8 @@ def atualiza_estado(window, asset, state):
             state['tela_jogo'] = 'main'
     elif state['tela_jogo'] == 'slot_machine': #Tela Caça Níquel (NÃO IMPLEMENTADO)
         return asset['mapa'].interacoes(asset, state)
+    elif state['tela_jogo'] ==  'game_over':
+        return GameOver().interacoes()
         
     return True
 
@@ -166,7 +170,7 @@ def game_loop(window, asset, state):
                     state['dinheiro'] += roleta.money
                     roleta.money = 0
                     roleta.giveMoney = True
-        elif state['tela_jogo'] == 'horse_race': #(NÃO IMPLEMENTADO)
+        elif state['tela_jogo'] == 'horse_race':
             if not horse_race_started:
                 horse_race = HorseRace(window)
                 state['minigame'] = horse_race
@@ -175,7 +179,7 @@ def game_loop(window, asset, state):
             if horse_race.money != 0 and not horse_race.giveMoney:
                 horse_race.giveMoney = True
                 state['dinheiro'] += horse_race.money
-        elif state['tela_jogo'] == 'poker': #(NÃO IMPLEMENTADO)
+        elif state['tela_jogo'] == 'poker':
             if not poker_started:
                 poker = Poker(window)
                 state['minigame'] = poker
@@ -192,11 +196,13 @@ def game_loop(window, asset, state):
                     state['dinheiro'] += poker.bet
         elif state['tela_jogo'] == 'slot_machine': #(NÃO IMPLEMENTADO)
             asset['mapa'].desenha(window, asset, state)
+        elif state['tela_jogo'] == 'game_over':
+            GameOver().desenha(window, asset, state)
 
-        if state['dinheiro'] >= 0 and state['tela_jogo'] != 'inicio':
+        if state['dinheiro'] > 0 and state['tela_jogo'] != 'inicio':
             window.blit(asset['money_font'].render(f'Saldo: R${state["dinheiro"]}', True, (0, 0, 0)), (10,10))
-        elif state['dinheiro'] < 0 and state['tela_jogo'] != 'inicio':
-            window.blit(asset['money_font'].render(f'Saldo: R${state["dinheiro"]}', True, (255, 0, 0)), (10,10))
+        elif state['dinheiro'] <= 0 and state['tela_jogo'] != 'inicio':
+            state['tela_jogo'] = 'game_over'
         pygame.display.update()
 
 if __name__ == '__main__':
