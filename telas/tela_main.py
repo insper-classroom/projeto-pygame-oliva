@@ -11,8 +11,8 @@ class Cassino():
         self.paredes = [pygame.Rect(377, 215, 277, 1), pygame.Rect(377, 348, 277, 1), pygame.Rect(377, 215, 1, 133), pygame.Rect(654, 215, 1, 133), #poker
                         pygame.Rect(975, 80, 240, 1), pygame.Rect(975, 0, 1, 80), pygame.Rect(1215, 0, 1, 80), #horse_race
                         pygame.Rect(508, 0, 1, 89), pygame.Rect(832, 0, 1, 89), pygame.Rect(508, 89, 324, 1), #bar
-                        pygame.Rect(372, 38, 1, 85), pygame.Rect(372, 38, 62, 1), pygame.Rect(372, 123, 62, 1), pygame.Rect(435, 38, 1, 85) #agiota
-                        ] 
+                        pygame.Rect(372, 38, 1, 85), pygame.Rect(372, 38, 62, 1), pygame.Rect(372, 123, 62, 1), pygame.Rect(435, 38, 1, 85), #agiota
+                        pygame.Rect(0, 173, 132, 1), pygame.Rect(0, 380, 132, 1), pygame.Rect(132, 173, 1, 207)] 
 
         for key, img in asset['objs'].items():
             self.objs[key] = pygame.transform.scale(img, img_sizes[key])
