@@ -48,9 +48,14 @@ class HorseRace():
         self.betsButton = [BetButton(self.window, 250 * i, 400, i) for i in range(1, 5)]
         self.playButton = pygame.rect.Rect((1280 // 2) - 60, 720 // 1.25, 120, 30)
         self.background = pygame.transform.scale(pygame.image.load('images/horserace.png'), (1280,720))
-        self.resetButton = pygame.rect.Rect((1280 // 2) - 60, 720 // 2 + 25, 120, 60)
+        self.resetButton = pygame.rect.Rect((1280 // 2) - 60, 720 // 2 + 150, 120, 60)
         self.giveMoney = False
         self.money = 0
+        self.podiumImage = pygame.image.load('images/horse_race/podio.png')
+        self.podium = []
+        self.showPodium = False
+        self.podiumHorses = []
+        self.addHorses = False
 
     def desenha(self):
         self.window.fill((0,0,0))
@@ -58,16 +63,16 @@ class HorseRace():
         delta = (tick - self.lastTick) / 1000
         self.lastTick = tick
         if not self.isInBetMenu:
-            self.window.blit(self.background, (0,0))
-            font = pygame.font.Font(pygame.font.get_default_font(), 36)
-            text_surface = font.render(self.messageWinner, True, (255, 255, 255))
-            x =  (1280 // 2) - (text_surface.get_width() // 2)
-            y = (720 // 2) - (text_surface.get_height() // 2) - 50
-            self.window.blit(text_surface, (x, y))
+            self.window.blit(self.background, (0, 0))
             for horse in self.horses:
                 horse.desenha()
                 horse.movimenta(delta)
                 if horse.x >= 1200:
+                    if not horse.index in self.podium:
+                        self.podium.append(horse.index)
+                    if len(self.podium) == 4 and not self.addHorses:
+                        self.showPodium = True
+                        self.podiumHorses = [Horse(self.window, (1280 // 2) - 15, 278, 0, self.podium[0]), Horse(self.window, (1280 // 2) - 117, 300, 0, self.podium[1]), Horse(self.window, (1280 // 2) + 85, 318, 0, self.podium[2])]
                     if self.messageWinner == '':
                         if horse.index == self.bet:
                             self.money = 400
@@ -75,12 +80,22 @@ class HorseRace():
                             self.money = -100
                         self.messageWinner = f'O cavalo {horse.index} ganhou! Você ganhou R$ 400,00' if horse.index == self.bet else f'O cavalo {horse.index} ganhou! Você perdeu R$ 100,00'
                     horse.x = 1200
-            if self.messageWinner != '':
-                pygame.draw.rect(self.window, (0, 0, 0), self.resetButton)
-                text_surface = self.font.render(f'Reiniciar', True, (255, 255, 255))
-                x = (1280 // 2) - 60 + (self.resetButton.width // 2) - (text_surface.get_width() // 2)
-                y = 720 // 2 + 25 + (self.resetButton.height // 2) - (text_surface.get_height() // 2)
+            if self.showPodium:
+                self.window.fill((0,0,0))
+                font = pygame.font.Font(pygame.font.get_default_font(), 36)
+                text_surface = font.render(self.messageWinner, True, (255, 255, 255))
+                x =  (1280 // 2) - (text_surface.get_width() // 2)
+                y = (720 // 2) - (text_surface.get_height() // 2) - 150
                 self.window.blit(text_surface, (x, y))
+                self.window.blit(self.podiumImage, ((1280 // 2 )- (350 // 2), (720 // 2) - (350 // 2)))
+                if self.messageWinner != '':
+                    pygame.draw.rect(self.window, (255, 255, 255), self.resetButton)
+                    text_surface = self.font.render(f'Reiniciar', True, (0, 0, 0))
+                    x = (1280 // 2) - 60 + (self.resetButton.width // 2) - (text_surface.get_width() // 2)
+                    y = 720 // 2 + 150 + (self.resetButton.height // 2) - (text_surface.get_height() // 2)
+                    self.window.blit(text_surface, (x, y))
+                    for horse in self.podiumHorses:
+                        horse.desenha()
             if self.horses[0].x >= 600 and self.horseWinner == None:
                 self.horseWinner = randint(0, 4)
                 self.horses[self.horseWinner - 1].speed += (120 - self.horses[self.horseWinner - 1].speed) + 30
@@ -121,6 +136,10 @@ class HorseRace():
         self.bet = 0
         self.money = 0
         self.giveMoney = False
+        self.podium = []
+        self.showPodium = False
+        self.podiumHorses = []
+        self.addHorses = False
 
     def interacoes(self):
         """

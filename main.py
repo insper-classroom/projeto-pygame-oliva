@@ -150,10 +150,9 @@ def game_loop(window, asset, state):
             if not blackjack_started:
                 blackjack = Blackjack(window)
                 state['minigame'] = blackjack
-                blackjack.start()
                 blackjack_started = True
             blackjack.desenha()
-            if not blackjack.isInMenu:
+            if not blackjack.isInMenu and not blackjack.isInGameMenu:
                 blackjack.finishGame()
                 if blackjack.resultGame == 'win':
                     state['dinheiro'] += 100
@@ -188,14 +187,9 @@ def game_loop(window, asset, state):
                 poker_started = True
                 poker.deal_cards()
             poker.desenha()
-            if poker.resultMessage != '' and not poker.giveMoney:
+            if poker.resultMessage != '' and not poker.giveMoney and not poker.animation:
                 poker.giveMoney = True
-                if 'dealer' in poker.resultMessage:
-                    state['dinheiro'] -= poker.bet
-                elif 'desistiu' in poker.resultMessage:
-                    state['dinheiro'] -= poker.bet
-                elif 'Você' in poker.resultMessage:
-                    state['dinheiro'] += poker.bet
+                state['dinheiro'] += poker.bet
         elif state['tela_jogo'] == 'slot_machine': #(NÃO IMPLEMENTADO)
             asset['mapa'].desenha(window, asset, state)
         elif state['tela_jogo'] == 'game_over':

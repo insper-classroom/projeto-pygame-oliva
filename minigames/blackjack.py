@@ -11,7 +11,7 @@ class Blackjack():
         self.userCards = []
         self.dealerCards = []
         self.deck = []
-        self.isInMenu = True
+        self.isInGameMenu = False
         self.font = pygame.font.Font(pygame.font.get_default_font(), 20)
         self.pedir = pygame.rect.Rect(510, 650, 100, 50)
         self.parar = pygame.rect.Rect(660, 650, 100, 50)
@@ -23,6 +23,8 @@ class Blackjack():
         self.finishButton = pygame.rect.Rect(660, 650, 100, 50)
         self.resultGame = None
         self.giveResult = False
+        self.isInMenu = True
+        self.initGameButton = pygame.rect.Rect((1280 // 2) - 100, 720 // 1.9, 200, 50)
 
     def start(self):
         """Inicia o jogo criando o baralho e distribuindo cartas para o jogador e o dealer"""
@@ -52,34 +54,48 @@ class Blackjack():
 
     def desenha(self, status=False):
         """Desenha a tela do jogo"""
-        self.window.fill((2, 85, 0))
-        userCardsWidth = len(self.userCards) * 150
-        dealerCardsWidth = len(self.dealerCards) * 150
-        startXUser = (1280 - userCardsWidth) // 2
-        startXDealer = (1280 - dealerCardsWidth) // 2
-        
-        for index, card in enumerate(self.userCards):
-            self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXUser + (index * 150), 420))
-        self.drawText(f'Sua pontuação: {self.userPoints}', startXUser - 225, 420 + (181 // 2), self.font, (255, 255, 255))
-        for index, card in enumerate(self.dealerCards):
-            if not status:
-                if index == 0:
-                    self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
+        if not self.isInMenu:
+            self.window.fill((2, 85, 0))
+            userCardsWidth = len(self.userCards) * 150
+            dealerCardsWidth = len(self.dealerCards) * 150
+            startXUser = (1280 - userCardsWidth) // 2
+            startXDealer = (1280 - dealerCardsWidth) // 2
+            
+            for index, card in enumerate(self.userCards):
+                self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXUser + (index * 150), 420))
+            self.drawText(f'Sua pontuação: {self.userPoints}', startXUser - 225, 420 + (181 // 2), self.font, (255, 255, 255))
+            for index, card in enumerate(self.dealerCards):
+                if not status:
+                    if index == 0:
+                        self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
+                    else:
+                        self.window.blit(pygame.transform.scale(pygame.image.load('./images/cards/Backs/back.png'), (125, 181)), (startXDealer + (index * 150), 100))
                 else:
-                    self.window.blit(pygame.transform.scale(pygame.image.load('./images/cards/Backs/back.png'), (125, 181)), (startXDealer + (index * 150), 100))
-            else:
-                self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
-        
-        self.drawText(f'Pontuação Mesa: {self.dealerPoints}', startXDealer - 225, 100 + (181 // 2), self.font, (255, 255, 255))
-        if self.isInMenu:
-            self.drawButtons()
-        
-        if self.reset:
-            self.drawText(self.resultMessage, (1280 // 2) - (len(self.resultMessage)) - 100, 350, self.font, (255, 255, 255))
-            pygame.draw.rect(self.window, (0, 128, 0), self.resetButton)
-            pygame.draw.rect(self.window, (255, 0, 0), self.finishButton)
-            self.drawText("Reiniciar", 515, 665, self.font, (255, 255, 255))
-            self.drawText("Fechar", 675, 665, self.font, (255, 255, 255))
+                    self.window.blit(pygame.transform.scale(pygame.image.load(f'./images/cards/{card}'), (125, 181)), (startXDealer + (index * 150), 100))
+            
+            self.drawText(f'Pontuação Mesa: {self.dealerPoints}', startXDealer - 225, 100 + (181 // 2), self.font, (255, 255, 255))
+            if self.isInGameMenu:
+                self.drawButtons()
+            
+            if self.reset:
+                self.drawText(self.resultMessage, (1280 // 2) - (len(self.resultMessage)) - 100, 350, self.font, (255, 255, 255))
+                pygame.draw.rect(self.window, (0, 128, 0), self.resetButton)
+                pygame.draw.rect(self.window, (255, 0, 0), self.finishButton)
+                self.drawText("Reiniciar", 515, 665, self.font, (255, 255, 255))
+                self.drawText("Fechar", 675, 665, self.font, (255, 255, 255))
+        else:
+            self.window.fill((0, 0, 0))
+            font = pygame.font.Font(pygame.font.get_default_font(), 36)
+            text_surface = font.render('Seja bem vindo ao blackjack, para começar clique no botão abaixo.', True, (255, 255, 255))
+            x =  (1280 // 2) - (text_surface.get_width() // 2)
+            y = (720 // 2) - (text_surface.get_height() // 1.4) - 50
+            self.window.blit(text_surface, (x, y))
+            pygame.draw.rect(self.window, (255, 255, 255), self.initGameButton)
+            font = pygame.font.Font(pygame.font.get_default_font(), 20)
+            text_surface = self.font.render(f'Jogar', True, (0, 0, 0))
+            x = (1280 // 2) - 100 + (self.initGameButton.width // 2) - (text_surface.get_width() // 2)
+            y = 720 // 1.9 + (self.initGameButton.height // 2) - (text_surface.get_height() // 2)
+            self.window.blit(text_surface, (x, y))
 
     def drawText(self, text, x, y, font, color):
         """Desenha um texto na tela"""
@@ -110,7 +126,7 @@ class Blackjack():
             self.deck.pop(card1)
             self.userPoints = sum(map(self.getCardValue, self.userCards))
             if self.userPoints > 21:
-                self.isInMenu = False
+                self.isInGameMenu = False
         else:
             self.dealerCards.append(random.choice(self.deck))
 
@@ -145,7 +161,7 @@ class Blackjack():
         self.userCards = []
         self.dealerCards = []
         self.deck = []
-        self.isInMenu = True
+        self.isInGameMenu = True
         self.userPoints = 0
         self.dealerPoints = 0
         self.resultMessage = ''
@@ -160,13 +176,19 @@ class Blackjack():
                 return False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.isInMenu:
+                    if self.initGameButton.collidepoint(event.pos):
+                        self.isInMenu = False
+                        self.isInGameMenu = True
+                        self.start()
+                        return True
+                if self.isInGameMenu:
                     if self.pedir.collidepoint(event.pos):
                         pygame.mixer.music.fadeout(2)
                         sfx_carta = pygame.mixer.Sound('musica/dando_carta.wav')
                         sfx_carta.play()
                         self.addCard()
                     elif self.parar.collidepoint(event.pos):
-                        self.isInMenu = False
+                        self.isInGameMenu = False
                 elif self.reset:
                     if self.resetButton.collidepoint(event.pos):
                         self.resetGame()
@@ -179,14 +201,13 @@ if __name__ == '__main__':
     window = pygame.display.set_mode((1280,720))
     pygame.display.set_caption('Blackjack')
     blackjack = Blackjack(window)
-    blackjack.start()
     running = True
     while running:
         if not blackjack.interacoes():
             running = False
             break
         blackjack.desenha()
-        if not blackjack.isInMenu:
+        if not blackjack.isInMenu and not blackjack.isInGameMenu:
             blackjack.finishGame()
             blackjack.desenha(True)
         pygame.display.update()
