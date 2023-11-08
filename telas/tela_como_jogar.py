@@ -69,7 +69,7 @@ class ComoJogar:
     def desenha(self, window):
         fonte_bot = pygame.font.Font(pygame.font.get_default_font(), 16)
         fonte_tit = pygame.font.Font(pygame.font.get_default_font(), 20)
-        fonte_txt = pygame.font.Font(pygame.font.get_default_font(), 12)
+        fonte_txt = pygame.font.Font(pygame.font.get_default_font(), 14)
 
         #desenha base da tela de instruções
         pygame.draw.rect(window, (0,0,0), self.tela)

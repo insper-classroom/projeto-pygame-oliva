@@ -38,7 +38,7 @@ def inicializa():
     asset['como_jogar'] = ComoJogar(asset)
 
     window = pygame.display.set_mode(tuple(asset['tam_tela']), vsync=asset['vsync'], flags=pygame.SCALED)
-    pygame.display.set_caption('Cassino')
+    pygame.display.set_caption('Casino Nights')
     
 
     #Pega imagens da pasta de Objetos
