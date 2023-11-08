@@ -13,7 +13,7 @@ class Inicio:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 state['tela_jogo'] = 'main'
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for circ in self.circles:
@@ -33,7 +33,7 @@ class Inicio:
 
         window.blit(self.img, [asset['tam_tela'][0]/4, asset['tam_tela'][1]/2 -asset['tam_tela'][1]/3])
   
-        txt = asset['def_font'].render('Aperte qualquer tecla para iniciar o jogo.', False, (255,255,255))
+        txt = asset['def_font'].render('Aperte espaço para iniciar o jogo.', False, (255,255,255))
         window.blit(txt, (asset['tam_tela'][0]/2 - txt.get_width()/2, 690))
 
 
