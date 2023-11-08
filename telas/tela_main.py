@@ -9,7 +9,10 @@ class Cassino():
 
         #(top, bottom, left, right)
         self.paredes = [pygame.Rect(377, 215, 277, 1), pygame.Rect(377, 348, 277, 1), pygame.Rect(377, 215, 1, 133), pygame.Rect(654, 215, 1, 133), #poker
-                        pygame.Rect(975, 80, 240, 1), pygame.Rect(975, 0, 1, 80), pygame.Rect(1215, 0, 1, 80)] #horse_race
+                        pygame.Rect(975, 80, 240, 1), pygame.Rect(975, 0, 1, 80), pygame.Rect(1215, 0, 1, 80), #horse_race
+                        pygame.Rect(508, 0, 1, 89), pygame.Rect(832, 0, 1, 89), pygame.Rect(508, 89, 324, 1), #bar
+                        pygame.Rect(372, 38, 1, 85), pygame.Rect(372, 38, 62, 1), pygame.Rect(372, 123, 62, 1), pygame.Rect(435, 38, 1, 85) #agiota
+                        ] 
 
         for key, img in asset['objs'].items():
             self.objs[key] = pygame.transform.scale(img, img_sizes[key])
@@ -36,6 +39,7 @@ class Cassino():
                              ]
 
             self.time = 0
+            self.som_baralho = pygame.mixer.Sound('musica/embaralhando.wav')
 
     def rects(self):
         """Cria e pega Rect de todos os objetos no mapa"""
@@ -68,6 +72,9 @@ class Cassino():
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 state['tela_jogo'] = 'menu'
             elif state['aviso'] != None and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                if state['aviso'] == 'blackjack' or state['aviso'] == 'poker':
+                    pygame.mixer.music.fadeout(3)
+                    self.som_baralho.play()
                 state['tela_jogo'] = state['aviso']
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
                 state['vel'][0] += 250
@@ -121,6 +128,7 @@ class Cassino():
             pygame.draw.rect(window, (0,0,0), parede)
 
         window.blit(self.mapa, (0,0))
+        
         for key, pos in self.rects().items():
             for p in pos:
                 window.blit(self.objs[key], p.topleft)
@@ -144,7 +152,7 @@ class Cassino():
                 window.blit(asset['def_font'].render(f'Você deseja jogar {traducao[state["aviso"]]}?', True, (0, 0, 0)), (440,640))
                 window.blit(asset['leg_font'].render(f'Pressione \"e\" para iniciar o jogo.', True, (0, 0, 0)), (440,700))
             elif state['aviso'] == 'agiota':
-                pass
+                window.blit(asset['def_font'].render('Boa tarde! Bem vindo ao Casino Nights. Aproveite.', True, (0, 0, 0)), (440,640))
             else:
                 window.blit(asset['def_font'].render(f'Em breve...', True, (0, 0, 0)), (440,640))
             

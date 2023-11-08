@@ -84,7 +84,7 @@ def atualiza_estado(window, asset, state):
     pygame.mixer.music.set_volume(asset['vol_musica'])
     if not pygame.mixer.music.get_busy():
         pygame.mixer.music.load('musica/jazz_fundo.mp3')
-        pygame.mixer.music.play(-1, fade_ms=500)
+        pygame.mixer.music.play(-1, fade_ms=1500)
     
     if state['tela_jogo'] == 'inicio': #Tela inicial
         return asset['inicio'].interacoes(asset, state)

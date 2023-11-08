@@ -161,6 +161,9 @@ class Blackjack():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.isInMenu:
                     if self.pedir.collidepoint(event.pos):
+                        pygame.mixer.music.fadeout(2)
+                        sfx_carta = pygame.mixer.Sound('musica/dando_carta.wav')
+                        sfx_carta.play()
                         self.addCard()
                     elif self.parar.collidepoint(event.pos):
                         self.isInMenu = False
