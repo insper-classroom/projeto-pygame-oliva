@@ -29,7 +29,7 @@ body {
 /* ------------------------------------------------------------------------------- */
 
 p span {
-    color: goldenrod;
+    color: rgb(226, 173, 39);
     font-weight: bold;
 }
 
@@ -37,9 +37,11 @@ p span {
 
 footer {
     height: 5vh;
-    display: fixed;
+    display: flex;
     position: relative;
     color: ghostwhite;
+    align-items: center;
+    justify-content: center;
 }
 
 footer p {
@@ -48,13 +50,14 @@ footer p {
     width: 100%;
     text-align: center;
     font-size: 11px;
+    justify-content: center;
 }
 
 /* ------------------------------------------------------------------------------- */
 
 .logo_container{
     height: 100%;
-    width: 50%;
+    width: 30%;
     display: flex;
     float: left;
     padding-left: 15px;
@@ -67,7 +70,7 @@ footer p {
 }
 
 .logo_container h1{
-    color: goldenrod;
+    color: rgb(226, 173, 39);
     /*color:rgb(205, 25, 25);*/
     height: fit-content;
     display: flex;
@@ -87,7 +90,7 @@ footer p {
 /* ------------------------------------------------------------------------------- */
 
 .navigation {
-    width: 40%;
+    width: 65%;
     float: right;
     display: flex;
     height: 15vh;
@@ -255,7 +258,7 @@ footer p {
 }
 
 #jogo h1 {
-    color: ghostwhite;
+    color: rgb(226, 173, 39);
     font-size: 40px;
     text-align: center;
 }
@@ -278,6 +281,11 @@ footer p {
 #jogo .txt-img p span{
     font-size: 18px;
 }
+
+#jogo .txt-img p a{
+    color: ghostwhite;
+}
+
 /* ------------------------------------------------------------------------------- */
 
 #desenvolvimento {
@@ -290,7 +298,7 @@ footer p {
 }
 
 #desenvolvimento h1 {
-    color: ghostwhite;
+    color: rgb(226, 173, 39);
     font-size: 40px;
     text-align: center;
 }
@@ -311,7 +319,7 @@ footer p {
 }
 
 #como-jogar h1 {
-    color: ghostwhite;
+    color: rgb(226, 173, 39);
     font-size: 40px;
     text-align: center;
 }
@@ -357,7 +365,7 @@ footer p {
 }
 
 #sobre-nos h1 {
-    color: ghostwhite;
+    color: rgb(226, 173, 39);
     font-size: 40px;
     text-align: center;
 }
@@ -381,13 +389,10 @@ footer p {
 
 #sobre-nos .txt-img img {
     border-radius: 3%;
-    height: 400px;
-    width: 350px;
 }
-
 /* ------------------------------------------------------------------------------- */
 
-#contatos {
+#gameplay {
     padding-top: 17vh;
     padding-left: 20px;
     height: 80vh;
@@ -396,10 +401,70 @@ footer p {
     border-bottom-style: solid;
 }
 
-#contatos h1 {
-    color: ghostwhite;
+#gameplay h1 {
+    color: rgb(226, 173, 39);
     font-size: 40px;
     text-align: center;
+}
+
+#gameplay .content iframe{
+    width: 800px;
+    height: 400px;
+    margin: 3vh 5vh;
+    align-items: center;
+}
+
+#gameplay .txt-img{
+    font-size: 18px;
+    width: auto;
+    height: 70%;
+    color: ghostwhite;
+    float: left;
+}
+
+#gameplay .txt-img p span{
+    font-size: 18px;
+}
+
+#gameplay .txt-img p a{
+    color: ghostwhite;
+}
+/* ------------------------------------------------------------------------------- */
+
+#heuristica {
+    padding-top: 17vh;
+    padding-left: 20px;
+    height: 80vh;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#heuristica h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+#heuristica .container {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#heuristica .container h1 {
+    font-size: 30px;
+    color: ghostwhite;
+}
+
+#heuristica .container ul {
+    padding-top: 20px;
+}
+
+#heuristica .container ul {
+    list-style: circle;
+    list-style-position: outside;
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -414,7 +479,7 @@ footer p {
 }
 
 #log h1 {
-    color: ghostwhite;
+    color: rgb(226, 173, 39);
     font-size: 40px;
     text-align: center;
 }
@@ -426,4 +491,22 @@ footer p {
     height: fit-content;
     margin-top: 3%;
     text-align: center;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#feijao {
+    width: 300px;
+    height: 400px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#henrique {
+    height: 400px;
+    width: 350px;
+}
+
+.txt-riscado {
+    text-decoration: line-through;
 }
