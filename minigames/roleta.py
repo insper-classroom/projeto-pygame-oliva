@@ -210,6 +210,7 @@ class Roleta:
         self.resultGive = False
         self.giveMoney = False
         self.money = 0
+        self.sound = pygame.mixer.Sound('musica/bola_roleta.wav')
         self.betsButtons = [
             [Zero(387, 510, 0, self.window)],
             [Buttons(425 + (i * 37), 510, self.columns[2][i], self.window) for i in range(12)],
@@ -253,6 +254,7 @@ class Roleta:
                 self.sortedNumber = self.roulleteOrder[index]
                 if index != 0:
                     self.expectedAngle += (index / 37) * 360
+                self.sound.play()
             self.roleta = self.originalImage
             if (time - self.lastUptaded) / 1000 >= 0.001:
                 self.lastUptaded = time
@@ -262,6 +264,7 @@ class Roleta:
                     if self.radio > 105:
                         self.radio -= 1
                     else:
+                        self.sound.stop()
                         self.resultMenu = True
                 self.ballPos[0] = 640 + math.sin(math.radians(self.actualAngle)) * self.radio
                 self.ballPos[1] = 250 - math.cos(math.radians(self.actualAngle)) * self.radio

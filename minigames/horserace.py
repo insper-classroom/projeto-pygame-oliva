@@ -4,7 +4,7 @@ from random import randint
 class Horse():
     def __init__(self, window, x, y, speed, index):
         self.window = window
-        self.hourse = pygame.transform.scale(pygame.image.load('images/horse.png'), (60,60))
+        self.hourse = pygame.transform.scale(pygame.image.load(f'images/horses/{index}.png'), (60,60))
         self.x = x
         self.y = y
         self.speed = speed

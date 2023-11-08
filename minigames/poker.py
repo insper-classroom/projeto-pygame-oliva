@@ -32,6 +32,8 @@ class Poker:
         self.giveMoney = False
         self.initGameButton = pygame.rect.Rect((1280 // 2) - 100, 720 // 1.9, 200, 50)
         self.isInGameMenu = True
+        self.giveCardSound = pygame.mixer.Sound('musica/dando_carta.wav')
+        self.setCardSound = pygame.mixer.Sound('musica/colocando_carta_mesa.wav')
         self.payments = {
             'Par': 100,
             'Dois Pares': 200,
@@ -85,6 +87,7 @@ class Poker:
                     if self.animation:
                         timeDistance = (pygame.time.get_ticks() - self.lastTick) / 1000
                         if timeDistance >= 1:
+                            self.setCardSound.play()
                             self.lastTick = pygame.time.get_ticks()
                             self.animationIndex += 1
                         if index <= self.animationIndex:
