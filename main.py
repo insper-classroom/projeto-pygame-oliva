@@ -143,10 +143,9 @@ def game_loop(window, asset, state):
             if not blackjack_started:
                 blackjack = Blackjack(window)
                 state['minigame'] = blackjack
-                blackjack.start()
                 blackjack_started = True
             blackjack.desenha()
-            if not blackjack.isInMenu:
+            if not blackjack.isInMenu and not blackjack.isInGameMenu:
                 blackjack.finishGame()
                 if blackjack.resultGame == 'win':
                     state['dinheiro'] += 100
@@ -165,7 +164,7 @@ def game_loop(window, asset, state):
                     state['dinheiro'] += roleta.money
                     roleta.money = 0
                     roleta.giveMoney = True
-        elif state['tela_jogo'] == 'horse_race': #(NÃO IMPLEMENTADO)
+        elif state['tela_jogo'] == 'horse_race':
             if not horse_race_started:
                 horse_race = HorseRace(window)
                 state['minigame'] = horse_race
@@ -174,21 +173,16 @@ def game_loop(window, asset, state):
             if horse_race.money != 0 and not horse_race.giveMoney:
                 horse_race.giveMoney = True
                 state['dinheiro'] += horse_race.money
-        elif state['tela_jogo'] == 'poker': #(NÃO IMPLEMENTADO)
+        elif state['tela_jogo'] == 'poker':
             if not poker_started:
                 poker = Poker(window)
                 state['minigame'] = poker
                 poker_started = True
                 poker.deal_cards()
             poker.desenha()
-            if poker.resultMessage != '' and not poker.giveMoney:
+            if poker.resultMessage != '' and not poker.giveMoney and not poker.animation:
                 poker.giveMoney = True
-                if 'dealer' in poker.resultMessage:
-                    state['dinheiro'] -= poker.bet
-                elif 'desistiu' in poker.resultMessage:
-                    state['dinheiro'] -= poker.bet
-                elif 'Você' in poker.resultMessage:
-                    state['dinheiro'] += poker.bet
+                state['dinheiro'] += poker.bet
         elif state['tela_jogo'] == 'slot_machine': #(NÃO IMPLEMENTADO)
             asset['mapa'].desenha(window, asset, state)
 
