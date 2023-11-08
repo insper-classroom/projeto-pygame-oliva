@@ -9,12 +9,15 @@ class Cassino():
 
         #(top, bottom, left, right)
         self.paredes = [pygame.Rect(377, 215, 277, 1), pygame.Rect(377, 348, 277, 1), pygame.Rect(377, 215, 1, 133), pygame.Rect(654, 215, 1, 133), #poker
-                        pygame.Rect(975, 80, 240, 1), pygame.Rect(975, 0, 1, 80), pygame.Rect(1215, 0, 1, 80)] #horse_race
+                        pygame.Rect(975, 80, 240, 1), pygame.Rect(975, 0, 1, 80), pygame.Rect(1215, 0, 1, 80), #horse_race
+                        pygame.Rect(508, 0, 1, 89), pygame.Rect(832, 0, 1, 89), pygame.Rect(508, 89, 324, 1), #bar
+                        pygame.Rect(372, 38, 1, 85), pygame.Rect(372, 38, 62, 1), pygame.Rect(372, 123, 62, 1), pygame.Rect(435, 38, 1, 85) #agiota
+                        ] 
 
         for key, img in asset['objs'].items():
             self.objs[key] = pygame.transform.scale(img, img_sizes[key])
         
-        self.objs['agiota'] = pygame.transform.scale(asset['personagens']['agiota'], (100,80))
+        self.objs['agiota'] = pygame.transform.scale(asset['personagens']['agiota'], (90,90))
 
         for i in range(3):
             self.paredes += [pygame.Rect(34 + 177*i, 589, 90, 1), #blackjack top
@@ -35,7 +38,8 @@ class Cassino():
                              pygame.Rect(910 + 160*i, 480 + 65*i, 1, 90) #roleta right
                              ]
 
-            self.time = pygame.time.get_ticks()
+            self.time = 0
+            self.som_baralho = pygame.mixer.Sound('musica/embaralhando.wav')
 
     def rects(self):
         """Cria e pega Rect de todos os objetos no mapa"""
@@ -54,7 +58,7 @@ class Cassino():
         pos['horse_race'] = [pygame.Rect(*(970, 0), *(250,85))]
         pos['poker'] = [pygame.Rect(*(370, 210), *(290,150))]
 
-        pos['agiota'] = [pygame.Rect(*(320, 50), *(100,80))]
+        pos['agiota'] = [pygame.Rect(*(360, 40), *(80,80))]
 
         return pos
     
@@ -68,6 +72,9 @@ class Cassino():
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 state['tela_jogo'] = 'menu'
             elif state['aviso'] != None and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                if state['aviso'] == 'blackjack' or state['aviso'] == 'poker':
+                    pygame.mixer.music.fadeout(3)
+                    self.som_baralho.play()
                 state['tela_jogo'] = state['aviso']
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
                 state['vel'][0] += 250
@@ -121,6 +128,7 @@ class Cassino():
             pygame.draw.rect(window, (0,0,0), parede)
 
         window.blit(self.mapa, (0,0))
+        
         for key, pos in self.rects().items():
             for p in pos:
                 window.blit(self.objs[key], p.topleft)
@@ -135,7 +143,7 @@ class Cassino():
             txt = asset['def_font'].render(t, True, (255,255,255))
             pygame.draw.rect(window, (0,0,0), pygame.Rect(asset['tam_tela'][0]/2 - txt.get_width()/2 - 5, asset['tam_tela'][1]/2 + 17, txt.get_width() + 10, txt.get_height() + 3))
             window.blit(txt, (asset['tam_tela'][0]/2 - txt.get_width()/2, asset['tam_tela'][1]/2 + 20))
-            if pygame.time.get_ticks() - self.time >= 4000:
+            if pygame.time.get_ticks() - self.time >= 3000:
                 asset['inicio'].prize_win = False
 
         if state['aviso'] != None:
@@ -143,6 +151,8 @@ class Cassino():
             if state['aviso'] in ['blackjack', 'roleta', 'horse_race', 'poker']:
                 window.blit(asset['def_font'].render(f'Você deseja jogar {traducao[state["aviso"]]}?', True, (0, 0, 0)), (440,640))
                 window.blit(asset['leg_font'].render(f'Pressione \"e\" para iniciar o jogo.', True, (0, 0, 0)), (440,700))
+            elif state['aviso'] == 'agiota':
+                window.blit(asset['def_font'].render('Boa tarde! Bem vindo ao Casino Nights. Aproveite.', True, (0, 0, 0)), (440,640))
             else:
                 window.blit(asset['def_font'].render(f'Em breve...', True, (0, 0, 0)), (440,640))
             
