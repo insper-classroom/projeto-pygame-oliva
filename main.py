@@ -49,7 +49,7 @@ def inicializa():
     #Pega imagens da pasta de Personagens
     for img in os.listdir('images/personagens'):
         if img.startswith('jogador'):
-            asset[img[:-4]] = Player(pygame.image.load(f'images/personagens/{img}'), [5, 300], (50,50))
+            asset[img[:-4]] = Player(pygame.image.load(f'images/personagens/{img}'), [asset['tam_tela'][0]/2 - 50, asset['tam_tela'][1]/2+50], (50,50))
         else:
             asset['personagens'][img[:-4]] = pygame.transform.scale(pygame.image.load(f'images/personagens/{img}'), (60,60))
     
