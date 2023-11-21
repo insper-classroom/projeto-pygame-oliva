@@ -1,0 +1,512 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    overflow-x: hidden;
+    background-color: rgb(39, 49, 21);
+    border-color: rgb(20, 103, 52);
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.header {
+    width: 100%;
+    height: 15vh;
+    display: block;
+    position: fixed;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+    font-family: fantasy;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+body {
+    font-family: system-ui;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+p span {
+    color: rgb(226, 173, 39);
+    font-weight: bold;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+footer {
+    height: 5vh;
+    display: flex;
+    position: relative;
+    color: ghostwhite;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    justify-content: center;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.logo_container{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    float: left;
+    padding-left: 15px;
+    position: relative;
+    align-items: center;
+}
+
+.logo_container a:hover{
+    opacity: 80%;
+}
+
+.logo_container h1{
+    color: rgb(226, 173, 39);
+    /*color:rgb(205, 25, 25);*/
+    height: fit-content;
+    display: flex;
+    font-size: 40px;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+.logo_container h1 span {
+    font-weight: 300;
+    font-size: 35px;
+    color:ghostwhite;
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.navigation {
+    width: 65%;
+    float: right;
+    display: flex;
+    height: 15vh;
+    align-items: center;
+    justify-content: right;
+    font-family: system-ui;
+}
+
+.navigation a {
+    display: flex;
+    
+    float: right;
+    align-items: center;
+    padding-right: 25px;
+    cursor: pointer;
+    
+}
+
+.navigation a li {
+    color: ghostwhite;
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+.navigation a li:hover {
+    text-decoration: underline;
+    text-decoration-color: ghostwhite;
+    text-decoration-thickness: 1px;
+    -o-transition:.4s;
+    -ms-transition:.4s;
+    -moz-transition:.4s;
+    -webkit-transition:.4s;
+    transition:.4s;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5%;
+    transition: 0.5s ease;
+    cursor: pointer;
+    height: fit-content;
+    height: 60px;
+}
+
+.downloadButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    color: white;
+    width: 200px;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.button:hover{
+    opacity: 90%;
+}
+
+.desenvolvimento {
+    width: 100%;
+    height: 90%;
+}
+
+.logs {
+    width: 50%;
+    height: 70%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+    border: 1px solid black;
+}
+
+.logs ul {
+    padding-top: 50px;
+}
+
+
+/* ------------------------------------------------------------------------------- */
+
+.content {
+    display: flex;
+    flex-direction: row;
+    color: ghostwhite;
+    padding: 20px;
+    height: fit-content;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.container {
+    height: 100%;
+    width: 100%;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-around;
+    color: ghostwhite;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.txt-img {
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    width: 100%;
+    margin: 3%;
+    align-items: center;
+    margin-bottom: 20px;
+    height: fit-content;
+}
+
+.txt-img a {
+    height: 100%;
+}
+
+.txt-img a:hover {
+    opacity: 80%;
+}
+
+.txt-img h1 {
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.txt-img img {
+    border-style: solid;
+    border-color: black;
+    height: 40%;
+    display: block;
+    margin: 2%;
+    margin-bottom: 5%;
+    width: 100%;
+}
+
+.txt-img p{
+    font-size: 15px;
+    margin: 5%;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#jogo {
+    padding-top: 17vh;
+    padding-left: 20px;
+    height: 80vh;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#jogo h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+#jogo .content img{
+    width: 50%;
+    height: 50%;
+    margin: 3vh 5vh;
+    align-items: center;
+}
+
+#jogo .txt-img{
+    font-size: 18px;
+    width: auto;
+    height: 70%;
+    color: ghostwhite;
+    float: left;
+}
+
+#jogo .txt-img p span{
+    font-size: 18px;
+}
+
+#jogo .txt-img p a{
+    color: ghostwhite;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#desenvolvimento {
+    padding-top: 17vh;
+    padding-left: 20px;
+    height: 80vh;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#desenvolvimento h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+#desenvolvimento img {
+    width: 20%;
+    height: 55%;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#como-jogar {
+    padding-top: 17vh;
+    height: fit-content;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#como-jogar h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+#como-jogar .container {
+    width: 100%;
+}
+
+#como-jogar .container p{
+    padding-top: 30px;
+    width: 70%;
+    text-align: justify;
+}
+
+#como-jogar .container p span {
+    color: goldenrod;
+    font-weight: bold;
+}
+
+#como-jogar .content {
+    flex-wrap: wrap; 
+    height: fit-content;   
+}
+
+#como-jogar .txt-img h1 {
+    font-size: 17px;
+}
+
+#como-jogar .txt-img img {
+    height: 200px;
+    width: 400px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#sobre-nos {
+    padding-top: 17vh;
+    padding-bottom: 2%;
+    height: fit-content;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#sobre-nos h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+#sobre-nos .txt-img {
+    font-size: 20px;
+    margin: 0px;
+    padding: 30px;
+    padding-top: 30px;
+ }
+
+#sobre-nos .txt-img h1 {
+   font-size: 20px;
+   padding-top: 5px;
+}
+
+#sobre-nos .txt-img p {
+    padding-top: 5px;
+    text-align: justify;
+ }
+
+#sobre-nos .txt-img img {
+    border-radius: 3%;
+}
+/* ------------------------------------------------------------------------------- */
+
+#gameplay {
+    padding-top: 17vh;
+    padding-left: 20px;
+    height: 80vh;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#gameplay h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+#gameplay .content iframe{
+    width: 800px;
+    height: 400px;
+    margin: 3vh 5vh;
+    align-items: center;
+}
+
+#gameplay .txt-img{
+    font-size: 18px;
+    width: auto;
+    height: 70%;
+    color: ghostwhite;
+    float: left;
+}
+
+#gameplay .txt-img p span{
+    font-size: 18px;
+}
+
+#gameplay .txt-img p a{
+    color: ghostwhite;
+}
+/* ------------------------------------------------------------------------------- */
+
+#heuristica {
+    padding-top: 17vh;
+    padding-left: 20px;
+    height: 80vh;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#heuristica h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+#heuristica .container {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#heuristica .container h1 {
+    font-size: 30px;
+    color: ghostwhite;
+}
+
+#heuristica .container ul {
+    padding-top: 20px;
+}
+
+#heuristica .container ul {
+    list-style: circle;
+    list-style-position: outside;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#log {
+    padding-top: 17vh;
+    padding-left: 20px;
+    height: auto;
+    width: 100%;
+    border-bottom: 3px;
+    border-bottom-style: solid;
+}
+
+#log h1 {
+    color: rgb(226, 173, 39);
+    font-size: 40px;
+    text-align: center;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#commits {
+    width: 100%;
+    height: fit-content;
+    margin-top: 3%;
+    text-align: center;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#feijao {
+    width: 300px;
+    height: 400px;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+#henrique {
+    height: 400px;
+    width: 350px;
+}
+
+.txt-riscado {
+    text-decoration: line-through;
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Casino Nights</title>
+</head>
+<body>
+    <div class="header">
+        <div class="logo_container">
+            <a href="#jogo"><h1>Casino <span>Nights</span></h1></a>
+        </div>
+        <div class="navigation">
+            <a href="#jogo"><li>O Jogo</li></a>
+            <a href="#como-jogar"><li>Como Jogar</li></a>
+            <a href="#gameplay"><li>Gameplay</li></a>
+            <a href="#sobre-nos"><li>Sobre Nós</li></a>
+            <a href="#heuristica"><li>Avaliação Heurística</li></a>
+            <a href="#log"><li>Log de Desenvolvimento</li></a>
+        </div>
+    </div>
+
+    <div id="jogo">
+        <h1>O Jogo</h1>
+        <div class="content">
+            <img src="prints/logo.png">
+            <div class="txt-img">
+                <p>Bem vindos(as) ao <span>Casino Nights</span>.<br><br>
+                A ideia do jogo é simular um cassino. Você pode se movimentar no mapa, 
+                e entrar em diferentes minigames, como Blackjack, Poker, Roleta, e até apostar em Corridas no Jockey!<br><br>Para jogar, é necessário ter o 
+                <a href="https://www.python.org/downloads/">Python</a> instalado, e a biblioteca <a href="https://www.pygame.org/download.shtml">Pygame.</a></p>
+                <div class="button">
+                    <a class="downloadButton" href="./cassino_night.zip">Download</a>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="como-jogar">
+        <h1>Como Jogar</h1>
+        <div class="container">
+            <p>O jogador deve se movimentar usando as teclas <span>W</span> (para andar para cima),
+                <span>A</span> (para andar para a esquerda), <span>S</span> (para andar para baixo),
+                e <span>D</span> (para andar para a direita), o jogador inicia o jogo com R$2000, a não ser que ele encontre o bônus secreto...<br>As apostas
+                de cada minigame é fixa e predefinida, e o jogo termina quando o jogador zera seu saldo ou desiste do jogo.
+            </p>
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="txt-img">
+                        <img src="prints/tela_jogo.PNG">
+                    <h1>Tela Inicial</h1>
+                </div>
+                <div class="txt-img">
+                    <img src="prints/menu.PNG">
+                    <h1>Menu</h1>
+                </div>
+                
+                <div class="txt-img">
+                    <img src="prints/instrucoes.PNG">
+                    <h1>Instruções</h1>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="txt-img">
+                    <img src='prints/configuracoes.PNG'>
+                    <h1>Configurações</h1>
+                </div>
+
+                <div class="txt-img">
+                    <img src="prints/blackjack.PNG">
+                    <h1>Blackjack</h1>
+                </div>
+
+                <div class="txt-img">
+                    <img src="prints/roleta.PNG">
+                    <h1>Roleta</h1>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="txt-img">
+                    <img src="prints/poker.PNG">
+                    <h1>Poker</h1>
+                </div>
+
+                <div class="txt-img">
+                    <img src="prints/jockey.PNG">
+                    <h1>Corrida de Cavalo</h1>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameplay">
+        <h1>Gameplay</h1>
+        <div class="content">
+            <iframe src="https://www.youtube.com/embed/hw8pdjhobDU"></iframe>
+            <div class="txt-img">
+                <p>Ao lado temos uma gameplay rápida para mostrar o visual (incrível) do nosso jogo, e mostrar o funcionamento básico dele.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="sobre-nos">
+        <h1>Sobre Nós</h1>
+        <div class="content">
+            <div class="container">
+                <div class="txt-img">
+                    <a href="https://henriquebrnetto.github.io/personal-website/index.html">
+                        <img id='henrique' src="prints/foto pro.JPG">
+                    </a>
+                    <h1>Henrique Bucci Rodrigues Netto</h1>
+                    <p>Jogador de basquete e estudante de Ciência da Computação no Insper no tempo livre.</p>
+                </div>
+
+                <div class="txt-img">
+                    <a href="https://feijonts.github.io/portfolio/">
+                        <img id='feijao' src="prints/joao citino.jpg">
+                    </a>
+                    <h1>João Whitaker Citino</h1>
+                    <p>São Paulino e estudante de Ciência da Computação no Insper no tempo livre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="heuristica">
+        <h1>Avaliação Heurística</h1>
+        <div class="content">
+            <div class="container">
+
+                <h1>Correções de Usabilidade</h1>
+                <ul>
+                    <li class="txt-riscado">Cavalos de cores diferentes</li>
+                    <li class="txt-riscado">Pódio na corrida de cavalo</li>
+                    <li class="txt-riscado">Inserir sons</li>
+                    <li class="txt-riscado">Colocar soma do blackjack</li>
+                    <li>Corrigir configuração de tela</li>
+                    <li class="txt-riscado">Colocar paredes no bar</li>
+                    <li>Poder alterar o valor da apostas</li>
+                    <li>Impedir apostas em todos os complementares (ex.: vermelho e preto) na roleta</li>
+                    <li class="txt-riscado">Tela de início</li>
+                    <li class="txt-riscado">Tela de game over</li>
+                    <li>Opção de aposta do 1 ao 18 ou 19 ao 36, e par ou ímpar</li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <h1>A Desenvolver</h1>
+                <ul>
+                    <li>Interacao com o coelho</li>
+                    <li>Caça níquel</li>
+                    <li>Incluir nomes diferentes para os cavalos</li>
+                    <li>Sinuca</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="log">
+        <h1>Log de Desenvolvimento</h1>
+        <div class="content">
+            <div id="commits">
+
+            </div>
+        </div>
+    </div>
+
+    <footer>Autores: Henrique Bucci Rodrigues Netto e João Whitaker Citino</footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>
